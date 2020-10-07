@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Systems Development and Frameworks - 2020/21
 
 This is the homework repository of course `Systems Development and Frameworks`
@@ -36,6 +35,4 @@ commits of the original repository.
 Do not submit lengthy pull request. Pull requests with a large `diff` in
 `Files changed` tab are difficult to review. If you want to get good feedback on
 your pull requests, don't push unrelated changes.
-=======
-# AlElMo
->>>>>>> Initial commit
+

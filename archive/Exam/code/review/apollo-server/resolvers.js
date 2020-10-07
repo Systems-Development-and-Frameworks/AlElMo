@@ -1,4 +1,4 @@
-const {AuthenticationError} = require("apollo-server-errors");
+const { AuthenticationError } = require("apollo-server-errors");
 const jwt = require('jsonwebtoken');
 const users = require('./users')
 
@@ -29,21 +29,21 @@ const resolvers = {
     }
   },
   Mutation: {
-    loginUser: (object, params)  => {
-      const { username, password} = params;
-      let theUser = users.find(user => user.username === username );
+    loginUser: (object, params) => {
+      const { username, password } = params;
+      let theUser = users.find(user => user.username === username);
 
-      if(theUser === undefined){
+      if (theUser === undefined) {
         throw new AuthenticationError(
           "Username undefined"
         );
       }
-      if(theUser.password !== password){
+      if (theUser.password !== password) {
         throw new AuthenticationError(
           "Wrong password"
         )
       }
-      return {token : jwt.sign(theUser, "12345")};
+      return { token: jwt.sign(theUser, "12345") };
     }
     deleteTodo: async (parent, args, context) => {
       todos.pop()
