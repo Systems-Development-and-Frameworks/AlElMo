@@ -18,12 +18,12 @@
           @update="updateNewsItem"
           @delete="deleteNewsItem"
         />
-        <!-- The component to add news items -->
-        <template #footer>
-          <add-news-item-form @create="createNewsItem" />
-        </template>
       </transition-group>
     </draggable>
+    <!-- The component to add news items -->
+    <template #footer>
+      <add-news-item-form @create="createNewsItem" />
+    </template>
   </b-container>
 </template>
 
