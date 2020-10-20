@@ -5,10 +5,10 @@
         <b-col class="text-center news-list-header">News List</b-col>
       </b-row>
     </template>
-    <!--- VueDraggable with Transitiongroup component to add nice animation/transition when upvoting or downvoting items--->
+    <!-- VueDraggable with Transitiongroup component to add nice animation/transition when upvoting or downvoting items -->
     <draggable :value="newsItemsOrdered">
       <transition-group type="transition" name="smooth-list">
-        <!--- The news items --->
+        <!-- The news items -->
         <news-item
           v-for="item in newsItemsOrdered"
           :key="item.id"
@@ -18,7 +18,7 @@
           @update="updateNewsItem"
           @delete="deleteNewsItem"
         />
-        <!--- The component to add news items --->
+        <!-- The component to add news items -->
         <template #footer>
           <add-news-item-form @create="createNewsItem" />
         </template>
