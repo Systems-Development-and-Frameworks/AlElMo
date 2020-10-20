@@ -1,5 +1,5 @@
 <template>
-  <b-container class="h-100">
+  <b-container>
     <template #header>
       <b-row>
         <b-col class="text-center news-list-header">News List</b-col>
