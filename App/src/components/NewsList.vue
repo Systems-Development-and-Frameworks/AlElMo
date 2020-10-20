@@ -66,7 +66,7 @@ export default {
      * @param {Object} item The news item
      */
     updateNewsItem(item) {
-      const { id, votes } = item;
+      const { id } = item;
       this.newsItems = this.newsItems.map((e) => (e.id === id && item) || e);
       /*
       Also possible:
