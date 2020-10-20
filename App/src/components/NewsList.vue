@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     newsItemsOrdered() {
-      return this.newsItems.slice().sort((e1, e2) => e1.votes > e2.votes);
+      return this.newsItems.slice().sort((e1, e2) => e2.votes - e1.votes);
     },
   },
   components: {
