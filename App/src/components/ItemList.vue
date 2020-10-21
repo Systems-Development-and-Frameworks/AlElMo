@@ -1,16 +1,17 @@
 <template>
   <div>
-    <div v-for="item in itemsArrOrdered" :key="item.id">
+    <div
+      v-for="item in itemsArrOrdered"
+      :key="item.id"
+      style="margin-bottom: 1em"
+    >
       <Item
         :item="item"
         v-on:changeVotes="updateVotes($event)"
         v-on:remove="removeItem($event)"
       />
     </div>
-      <p></p>
-      <p></p>
-      <AddItemForm v-on:addItem="addItem($event)" />
-      
+    <AddItemForm v-on:addItem="addItem($event)" />
   </div>
 </template>
 
@@ -32,13 +33,13 @@ export default {
   props: {},
   methods: {
     updateVotes: function (item) {
-      this.itemsArr = this.itemsArr.map((e) => (item.id === e.id) ?item:e);
+      this.itemsArr = this.itemsArr.map((e) => (item.id === e.id ? item : e));
     },
     removeItem: function (item) {
-      this.itemsArr = this.itemsArr.filter(e => e.id != item.id);
+      this.itemsArr = this.itemsArr.filter((e) => e.id != item.id);
     },
     addItem: function (title) {
-      this.itemsArr.push({id: this.id, title: title, votes: 0});
+      this.itemsArr.push({ id: this.id, title: title, votes: 0 });
       this.id++;
     },
   },
