@@ -8,10 +8,9 @@
 <script>
 export default {
   data() {
-    return {title:"",};
+    return { title: "" };
   },
-  props: {
-  },
+  props: {},
   methods: {
     addItem: function () {
       this.$emit("addItem", this.title);
