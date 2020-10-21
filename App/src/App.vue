@@ -3,11 +3,13 @@
     <img alt="Vue logo" src="./assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
     <b-form-input v-model="x" />
+    <ItemList />
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import ItemList from "./components/ItemList.vue";
 
 export default {
   data() {
@@ -18,6 +20,7 @@ export default {
   name: "App",
   components: {
     HelloWorld,
+    ItemList,
   },
 };
 </script>
