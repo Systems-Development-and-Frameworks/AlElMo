@@ -1,34 +1,48 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <b-form-input v-model="x" />
+  <div id="app" class="h-100">
+    <news-list />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import NewsList from "./components/NewsList.vue";
 
 export default {
   data() {
-    return {
-      x: "Moin Meister",
-    };
+    return {};
   },
   name: "App",
   components: {
-    HelloWorld,
+    "news-list": NewsList,
   },
 };
 </script>
 
 <style>
+html,
+body {
+  height: 100vh;
+  margin: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #ccc;
+}
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+  background: #444444;
+  position: absolute;
+  right: 0;
+  transition: color 0.25s;
+  border-radius: 1rem;
+}
+::-webkit-scrollbar-track {
+  background: none;
+  border: none;
 }
 </style>

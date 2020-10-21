@@ -1,12 +1,17 @@
 <template>
-  <b-container>
+  <b-card
+    class="h-100 border-none"
+    header-class="card-header-footer border-none"
+    footer-class="card-header-footer border-none"
+    body-class="card-body-c scroll-y"
+  >
     <template #header>
       <b-row>
         <b-col class="text-center news-list-header">News List</b-col>
       </b-row>
     </template>
     <!-- VueDraggable with Transitiongroup component to add nice animation/transition when upvoting or downvoting items -->
-    <draggable :value="newsItemsOrdered">
+    <draggable :value="newsItemsOrdered" handle="-">
       <transition-group type="transition" name="smooth-list">
         <!-- The news items -->
         <news-item
@@ -24,7 +29,7 @@
     <template #footer>
       <add-news-item-form @create="createNewsItem" />
     </template>
-  </b-container>
+  </b-card>
 </template>
 
 <script>
@@ -48,7 +53,7 @@ export default {
       const { title } = item;
       const id = `news_item_${this.currentId}_${Date.now()}`;
       const votes = 0;
-      this.newsItems.push({ id, title, votes });
+      this.newsItems.unshift({ id, title, votes });
       this.currentId += 1;
     },
 
@@ -94,6 +99,19 @@ export default {
   transition: transform 0.5s;
 }
 .news-list-header {
-  font-size: 2rem;
+  font-size: 2.5rem;
+}
+.card-body-c {
+  background-color: #222222;
+}
+.card-header-footer {
+  background-color: #333333 !important;
+}
+.border-none {
+  border: none !important;
+  border-radius: 0px !important;
+}
+.scroll-y {
+  overflow-y: scroll;
 }
 </style>
