@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <h1>{{ title }} ({{ votes }})</h1>
+      <h1>{{ item.title }} ({{ item.votes }})</h1>
     </div>
     <div>
-      <b-button v-on:click="changeVotes(votes++)"> Upvote</b-button>
-      <b-button v-on:click="changeVotes(votes--)"> Downvote</b-button>
-      <b-button variant="Remove"> Remove</b-button>
+      <b-button v-on:click="changeVotes(item.votes++)"> Upvote</b-button>
+      <b-button v-on:click="changeVotes(item.votes--)"> Downvote</b-button>
+      <b-button v-on:click="remove(item)"> Remove</b-button>
     </div>
   </div>
 </template>
@@ -17,18 +17,17 @@ export default {
     return {};
   },
   props: {
-    title: {
-      type: String,
+    item: {
+      type: Object,
       required: true,
-    },
-    votes: {
-      type: Number,
-      default: 0,
     },
   },
   methods: {
     changeVotes: function () {
-      this.$emit("changeVotes", this);
+      this.$emit("changeVotes", this.item);
+    },
+    remove: function () {
+      this.$emit("remove", this.item);
     },
   },
   computed: {},
