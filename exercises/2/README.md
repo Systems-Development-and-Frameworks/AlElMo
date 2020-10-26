@@ -1,19 +1,14 @@
 # Exercise #2
 
-| Deadline                   | Date                   |
-| -------------------------- | ---------------------- |
-| Review due date (optional) | 04.11.2020 - 14:00     |
-| **Final Due date**         | **11.11.2020 - 14:00** |
+Due date: **11.11.2020**
 
 ## Goal
 
 You will learn test-driven-development (TDD) and how to setup your own build server for continuous integration and continuous deployment (CI/CD). Also you will learn how to do component-driven-development (CDD) using [Storybook](https://www.learnstorybook.com/).
 
-Extend exercise #1 with the following objectives.
-
 ### Objectives
 :star: Add a linter to your project, e.g. `eslint` and/or `prettier`.
-- `yarn run lint` should fail in case of lint errors
+- `yarn run lint` fails in case of lint errors
 
 :star: Test your components with [jest](https://jestjs.io/) and [vue-test-utils](https://vue-test-utils.vuejs.org/).
 - `yarn run test:unit` runs all tests
@@ -21,8 +16,6 @@ Extend exercise #1 with the following objectives.
 Test-drive the following features:
 - :star: When all items are deleted from the list, it shows sth. like "The list is empty :("
 - :star: A button on the news list toggles between descending and ascending order
-
-A sample output could look like this:
 ```
 $ yarn run test --verbose
  PASS  src/components/NewsList/NewsList.spec.js
@@ -43,11 +36,12 @@ YourComponent/
   YourComponent.spec.js
 ```
 
-:star: Setup a build server for continuous integration, use either [Github Actions](https://github.com/features/actions), [Travis CI](https://travis-ci.org/) or [Circle Ci](https://circleci.com/) (Github Actions is probably the easiest, but feel free to use what you're comfortable with)
+:star: Setup a build server for continuous integration, use either [Travis CI](https://travis-ci.org/), [Circle Ci](https://circleci.com/) or [Github Actions](https://github.com/features/actions).
 - Your build server must:
   - check lint
   - check your tests
   - update [status checks](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-status-checks) on all PRs to your repository
+- Hint: Github Actions is probably the easiest
 
 :star: Create a [storybook](https://storybook.js.org/docs/vue/get-started/install) for each of your VueJS components
 - Co-locate storybook with component files:
@@ -83,7 +77,7 @@ YourComponent/
 In our lecture of October 21st 2020 we covered online open-source communities and git internals. These topics are not (yet) part of the current homework but will be a task in the upcoming homeworks and/or the final exam. So it's a great opportunity for you to practice the following:
 
 :rocket: Record an online pair-programming.
-- Choose someone who is not a member of your team, preferably some member of an open-source online community but a member of another team is fine, too.
+- Choose someone who is not a member of your team, preferably some member of an open-source online community but another team member is fine, too.
 - Record the pair-programming to [PeerTube](https://joinpeertube.org/en/) or [YouTube](https://www.youtube.com/) and send the link to the video to us
 - Kudos if you publish the video :+1: otherwise mark the video as "unlisted"
 
