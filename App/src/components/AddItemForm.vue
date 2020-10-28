@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-form-input debounce="300" v-model.trim="title" />
-    <b-button v-on:click="addItem">Add new item</b-button>
+    <input v-model.trim="title" />
+    <button v-on:click="addItem">Add new item</button>
   </div>
 </template>
 

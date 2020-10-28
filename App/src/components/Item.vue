@@ -4,9 +4,9 @@
       <h1>{{ item.title }} ({{ item.votes }})</h1>
     </div>
     <div>
-      <b-button v-on:click="changeVotes(item.votes++)"> Upvote</b-button>
-      <b-button v-on:click="changeVotes(item.votes--)"> Downvote</b-button>
-      <b-button v-on:click="remove(item)"> Remove</b-button>
+      <button v-on:click="changeVotes(item.votes++)">Upvote</button>
+      <button v-on:click="changeVotes(item.votes--)">Downvote</button>
+      <button v-on:click="remove(item)">Remove</button>
     </div>
   </div>
 </template>
