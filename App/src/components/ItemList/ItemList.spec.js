@@ -8,9 +8,9 @@ describe('ItemList', () => {
         const msg = 'Itemlist empty :('
         const wrapper = mount(ItemList)
 
-        wrapper.setData({ itemsArr: [] })
-
-        const item = wrapper.findComponent(Item)
-        expect(item.exists()).toBe(false)
+        wrapper.setData({ itemsArr: [] }).then(() => {
+            const byId = wrapper.find('#itemlist-empty')
+            expect(byId.element.id).toBe('itemlist-empty')
+        })
     })
 })
