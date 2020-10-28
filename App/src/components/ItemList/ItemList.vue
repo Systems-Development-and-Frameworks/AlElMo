@@ -13,7 +13,7 @@
         />
       </div>
     </template>
-    <div v-else>Itemlist empty :(</div>
+    <div v-else id="itemlist-emptyxxx">Itemlist empty :(</div>
     <AddItemForm v-on:addItem="addItem($event)" />
   </div>
 </template>
