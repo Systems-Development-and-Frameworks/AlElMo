@@ -8,10 +8,6 @@
 import ItemList from "./components/ItemList/ItemList.vue";
 
 export default {
-  data() {
-    return {};
-  },
-  name: "App",
   components: {
     ItemList,
   },
