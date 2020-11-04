@@ -1,26 +1,25 @@
 <template>
-  <div>
-    <template v-if="itemsArrOrdered.length">
-      <div
+  <b-container>
+    <item-list-header :desc="desc" @click="toggleOrdering" />
+    <template v-if="itemsArr.length">
+      <item
         v-for="item in itemsArrOrdered"
         :key="item.id"
-        style="margin-bottom: 1em"
-      >
-        <Item
-          :item="item"
-          v-on:changeVotes="updateVotes($event)"
-          v-on:remove="removeItem($event)"
-        />
-      </div>
+        :item="item"
+        @changeVotes="updateVotes"
+        @remove="removeItem"
+      />
     </template>
-    <div v-else id="itemlist-emptyxxx">Itemlist empty :(</div>
-    <AddItemForm v-on:addItem="addItem($event)" />
-  </div>
+    <empty-item-list v-else />
+    <add-item-form @addItem="addItem" />
+  </b-container>
 </template>
 
 <script>
 import Item from "../Item.vue";
 import AddItemForm from "../AddItemForm.vue";
+import EmptyItemList from "../EmptyItemList.vue";
+import ItemListHeader from "../ItemListHeader.vue";
 
 export default {
   data() {
