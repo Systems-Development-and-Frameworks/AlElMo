@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import Item from "./Item.vue";
-import AddItemForm from "./AddItemForm.vue";
-import EmptyItemList from "./EmptyItemList.vue";
-import ItemListHeader from "./ItemListHeader.vue";
+import Item from "../Item.vue";
+import AddItemForm from "../AddItemForm.vue";
+import EmptyItemList from "../EmptyItemList.vue";
+import ItemListHeader from "../ItemListHeader.vue";
 
 export default {
   data() {
