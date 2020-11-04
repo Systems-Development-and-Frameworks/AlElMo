@@ -8,18 +8,14 @@
 <script>
 export default {
   data() {
-    return { title: "" };
+    return {
+      title: "",
+    };
   },
-  props: {},
   methods: {
-    addItem: function () {
-      this.$emit("addItem", this.title);
+    addItem() {
+      this.$emit("addItem", { title: this.title });
     },
   },
-  computed: {},
-  components: {},
-  mounted() {},
 };
 </script>
-
-<style></style>

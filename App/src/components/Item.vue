@@ -23,17 +23,28 @@ export default {
     },
   },
   methods: {
-    changeVotes: function () {
-      this.$emit("changeVotes", this.item);
+    changeVotes(vote) {
+      const item = {
+        id: this.id,
+        title: this.title,
+        votes: this.votes + vote,
+      };
+      this.$emit("changeVotes", item);
     },
-    remove: function () {
+    remove() {
       this.$emit("remove", this.item);
     },
   },
-  computed: {},
-  components: {},
-  mounted() {},
+  computed: {
+    id() {
+      return this.item.id;
+    },
+    title() {
+      return this.item.title;
+    },
+    votes() {
+      return this.item.votes;
+    },
+  },
 };
 </script>
-
-<style></style>
