@@ -5,11 +5,11 @@
 name: Build, Test, Lint
 
 on:
-  [push, pull_request]
+  push
 
 defaults:
   run:
-    working-directory: ./webapp
+    working-directory: ./App
 
 jobs:
   build-test-lint:
@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [10.x, 12.x, 14.x]
 
     steps:
       - uses: actions/checkout@v2
