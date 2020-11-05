@@ -4,22 +4,48 @@
       <h1>{{ title }} ({{ votes }})</h1>
     </b-col>
     <b-col>
-      <b-button class="m-1" @click="changeVotes(1)">Upvote</b-button>
-      <b-button class="m-1" @click="changeVotes(-1)">Downvote</b-button>
-      <b-button class="m-1" @click="remove">Remove</b-button>
+      <b-button
+        class="m-1"
+        @click="changeVotes(1)"
+      >
+        Upvote
+      </b-button>
+      <b-button
+        class="m-1"
+        @click="changeVotes(-1)"
+      >
+        Downvote
+      </b-button>
+      <b-button
+        class="m-1"
+        @click="remove"
+      >
+        Remove
+      </b-button>
     </b-col>
   </b-row>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    id() {
+      return this.item.id;
+    },
+    title() {
+      return this.item.title;
+    },
+    votes() {
+      return this.item.votes;
     },
   },
   methods: {
@@ -33,17 +59,6 @@ export default {
     },
     remove() {
       this.$emit("remove", this.item);
-    },
-  },
-  computed: {
-    id() {
-      return this.item.id;
-    },
-    title() {
-      return this.item.title;
-    },
-    votes() {
-      return this.item.votes;
     },
   },
 };
