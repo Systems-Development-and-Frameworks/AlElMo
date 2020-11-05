@@ -13,13 +13,24 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    id() {
+      return this.item.id;
+    },
+    title() {
+      return this.item.title;
+    },
+    votes() {
+      return this.item.votes;
     },
   },
   methods: {
@@ -33,17 +44,6 @@ export default {
     },
     remove() {
       this.$emit("remove", this.item);
-    },
-  },
-  computed: {
-    id() {
-      return this.item.id;
-    },
-    title() {
-      return this.item.title;
-    },
-    votes() {
-      return this.item.votes;
     },
   },
 };

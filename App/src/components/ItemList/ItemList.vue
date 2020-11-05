@@ -1,6 +1,9 @@
 <template>
   <b-container>
-    <item-list-header :desc="desc" @click="toggleOrdering" />
+    <item-list-header
+      :desc="desc"
+      @click="toggleOrdering"
+    />
     <template v-if="itemsArr.length">
       <item
         v-for="item in itemsArrOrdered"
@@ -22,6 +25,12 @@ import EmptyItemList from "../EmptyItemList.vue";
 import ItemListHeader from "../ItemListHeader.vue";
 
 export default {
+  components: {
+    Item,
+    AddItemForm,
+    EmptyItemList,
+    ItemListHeader,
+  },
   data() {
     return {
       itemsArr: [
@@ -32,6 +41,12 @@ export default {
       desc: true,
     };
   },
+  computed: {
+    itemsArrOrdered() {
+      return this.sortItems(this.itemsArr);
+    },
+  },
+  mounted() {},
   methods: {
     updateVotes(item) {
       this.itemsArr = this.itemsArr.map((e) => (item.id === e.id ? item : e));
@@ -65,17 +80,5 @@ export default {
       this.desc = !this.desc;
     },
   },
-  computed: {
-    itemsArrOrdered() {
-      return this.sortItems(this.itemsArr);
-    },
-  },
-  components: {
-    Item,
-    AddItemForm,
-    EmptyItemList,
-    ItemListHeader,
-  },
-  mounted() {},
 };
 </script>
