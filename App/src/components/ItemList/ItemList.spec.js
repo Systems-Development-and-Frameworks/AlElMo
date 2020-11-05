@@ -1,8 +1,8 @@
 
-import { createLocalVue, mount } from '@vue/test-utils'
-import ItemList from './ItemList.vue'
-import Item from '../Item.vue'
-import EmptyItemList from '../EmptyItemList.vue'
+import { createLocalVue, mount } from '@vue/test-utils';
+import ItemList from './ItemList.vue';
+import Item from '../Item.vue';
+import EmptyItemList from '../EmptyItemList.vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 const localVue = createLocalVue();
@@ -81,4 +81,4 @@ describe('ItemList', () => {
             { id: 2, title: "Al", votes: 5 },
         ]);
     });
-})
+});
