@@ -12,6 +12,12 @@ export default {
       title: "",
     };
   },
+  props: {
+    placeholderForm: {
+      type: String,
+      default: "type here",
+    },
+  },
   methods: {
     addItem() {
       this.$emit("addItem", { title: this.title });

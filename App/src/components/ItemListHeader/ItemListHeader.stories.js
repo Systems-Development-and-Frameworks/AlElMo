@@ -7,11 +7,11 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
-    title: 'ItemListHeader',
-    compontent: ItemListHeader,
-    argTypes: {
-      click: {action: 'click'},
-    }
+  title: 'ItemListHeader',
+  compontent: ItemListHeader,
+  argTypes: {
+    click: { action: 'click', table: { disable: true } },
+  }
 };
 
 const Template = (args, { argTypes }) => ({
@@ -20,12 +20,14 @@ const Template = (args, { argTypes }) => ({
   template: '<ItemListHeader @click="click" v-bind="$props"/>',
 })
 
-export const Descending = Template.bind({})  
+export const Descending = Template.bind({})
 Descending.args = {
-  desc: false,
+  desc: true,
+  //todo rerender the button to new state
 }
 
-export const Ascending = Template.bind({})  
+export const Ascending = Template.bind({})
 Ascending.args = {
-  desc: true,
+  desc: false,
+  //todo rerender the button to new state
 }

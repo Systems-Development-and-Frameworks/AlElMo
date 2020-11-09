@@ -6,8 +6,8 @@ export default {
 };
 
 const Template = (args, { argTypes }) => ({
-  components: { EmptyItemList },
-  template: '<EmptyItemList/>',
+    components: { EmptyItemList },
+    template: '<EmptyItemList/>',
 })
 
-export const Primary = Template.bind({})
+export const Empty = Template.bind({})
