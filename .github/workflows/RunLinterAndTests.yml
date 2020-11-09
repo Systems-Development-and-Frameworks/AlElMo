@@ -5,7 +5,7 @@
 name: Build, Test, Lint
 
 on:
-  push
+  [push, pull_request]
 
 defaults:
   run:
