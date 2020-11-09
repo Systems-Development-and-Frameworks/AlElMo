@@ -4,24 +4,9 @@
       <h1>{{ title }} ({{ votes }})</h1>
     </b-col>
     <b-col>
-      <b-button
-        class="m-1"
-        @click="changeVotes(1)"
-      >
-        Upvote
-      </b-button>
-      <b-button
-        class="m-1"
-        @click="changeVotes(-1)"
-      >
-        Downvote
-      </b-button>
-      <b-button
-        class="m-1"
-        @click="remove"
-      >
-        Remove
-      </b-button>
+      <b-button class="m-1" @click="changeVotes(1)"> Upvote </b-button>
+      <b-button class="m-1" @click="changeVotes(-1)"> Downvote </b-button>
+      <b-button class="m-1" @click="remove"> Remove </b-button>
     </b-col>
   </b-row>
 </template>

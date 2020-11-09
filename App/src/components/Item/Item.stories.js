@@ -3,16 +3,20 @@ import Item from './Item'
 export default {
   title: 'Item',
   compontent: Item,
+  argTypes: {
+    remove: { action: 'remove', table: { disable: true } },
+    changeVotes: { action: 'changeVotes', table: { disable: true } }
+  }
 };
 
 const Template = (args, { argTypes }) => ({
-  components: { Item },
   props: Object.keys(argTypes),
-  template: '<Item :item="item"/>',
+  components: { Item },
+  template: '<Item :item="item" @remove="remove" @changeVotes="changeVotes" v-bind="$props"/>',
 })
 
-export const Primary = Template.bind({});
+export const SingleItem = Template.bind({});
 
-Primary.args = {
-  item: { id: 1, title: 'test', votes: 0 },
+SingleItem.args = {
+  item: { id: '1', title: 'test', votes: 0 },
 }

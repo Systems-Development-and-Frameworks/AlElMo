@@ -10,7 +10,7 @@ export default {
   title: 'ItemListHeader',
   compontent: ItemListHeader,
   argTypes: {
-    click: { action: 'click' },
+    click: { action: 'click', table: { disable: true } },
   }
 };
 
@@ -22,10 +22,12 @@ const Template = (args, { argTypes }) => ({
 
 export const Descending = Template.bind({})
 Descending.args = {
-  desc: false,
+  desc: true,
+  //todo rerender the button to new state
 }
 
 export const Ascending = Template.bind({})
 Ascending.args = {
-  desc: true,
+  desc: false,
+  //todo rerender the button to new state
 }
