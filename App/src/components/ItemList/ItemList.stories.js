@@ -10,6 +10,10 @@ Vue.use(IconsPlugin);
 export default {
   title: 'ItemList',
   compontent: ItemList,
+  argTypes: {
+    desc: { table: { disable: true } },
+    descInitial: { table: { disable: true } },
+  }
 };
 
 const Template = (args, { argTypes }) => ({
