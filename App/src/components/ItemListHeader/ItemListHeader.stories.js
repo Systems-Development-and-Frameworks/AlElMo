@@ -1,12 +1,13 @@
 import ItemListHeader from './ItemListHeader'
+import BootstrapVue from 'bootstrap-vue';
 
 export default {
-    title: 'ItemListHeader',
-    compontent: ItemListHeader,
+  title: 'ItemListHeader',
+  compontent: ItemListHeader,
 };
 
 const Template = (args, { argTypes }) => ({
-  components: { ItemListHeader },
+  components: { ItemListHeader, BootstrapVue },
   template: '<ItemListHeader/>',
 })
 
