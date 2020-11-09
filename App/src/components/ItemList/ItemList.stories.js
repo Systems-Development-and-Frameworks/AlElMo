@@ -1,5 +1,5 @@
-
 import ItemList from './ItemList'
+import { Descending, Ascending } from '../ItemListHeader/ItemListHeader.stories'
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,39 +13,23 @@ export default {
 };
 
 const Template = (args, { argTypes }) => ({
-  data: function () {
-    return {
-      itemsArr: [
-        { id: 1, title: "Al", votes: 3 },
-        { id: 2, title: "El", votes: 5 },
-        { id: 3, title: "Mo", votes: 1 },
-      ],
-      desc: false,
-    }
-  },
-
-
   props: Object.keys(argTypes),
   components: { ItemList },
-  template: '<ItemList/>',
+  template: '<ItemList v-bind="$props"/>',
 })
 
-export const Descending = Template.bind({});
-Descending.data = {
-  itemsArr: [
-    { id: 1, title: "Al", votes: 3 },
-    { id: 2, title: "El", votes: 5 },
-    { id: 3, title: "Mo", votes: 1 },
-  ],
-  desc: true,
+export const DescendingList = Template.bind({});
+DescendingList.args = {
+  ...Descending.args,
+  descInitial: true,
 };
 
-export const Ascending = Template.bind({});
-Ascending.data = {
-  itemsArr: [
-    { id: 1, title: "Al", votes: 3 },
-    { id: 2, title: "El", votes: 5 },
-    { id: 3, title: "Mo", votes: 1 },
-  ],
-  desc: false,
+export const AscendingList = Template.bind({});
+AscendingList.args = {
+  ...Ascending.args,
+  descInitial: false,
+  //Todo: change value of ItemList.desc
 };
+
+export const EmptyList = Template.bind({});
+  //Todo: remove all items in itemsArr

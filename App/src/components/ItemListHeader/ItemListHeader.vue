@@ -17,6 +17,7 @@ export default {
     desc: {
       type: Boolean,
       required: true,
+      default: true,
     },
   },
   methods: {
