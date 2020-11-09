@@ -1,16 +1,10 @@
 <template>
   <b-row>
-    <b-col
-      cols="12"
-      class="font-weight-bold"
-    >
+    <b-col cols="12" class="font-weight-bold">
       <h1>Item List</h1>
     </b-col>
     <b-col>
-      <b-button
-        class="mb-5"
-        @click="click"
-      >
+      <b-button :variant="variant" class="mb-5" @click="click">
         Ordering: {{ desc ? "Desc" : "Asc" }}
       </b-button>
     </b-col>
@@ -28,6 +22,11 @@ export default {
   methods: {
     click() {
       this.$emit("click");
+    },
+  },
+  computed: {
+    variant() {
+      return this.desc ? "danger" : "dark";
     },
   },
 };
