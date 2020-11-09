@@ -1,9 +1,6 @@
 <template>
   <b-container>
-    <item-list-header
-      :desc="desc"
-      @click="toggleOrdering"
-    />
+    <item-list-header :desc="desc" @click="toggleOrdering" />
     <template v-if="itemsArr.length">
       <item
         v-for="item in itemsArrOrdered"
@@ -38,8 +35,14 @@ export default {
         { id: 2, title: "El", votes: 5 },
         { id: 3, title: "Mo", votes: 1 },
       ],
-      desc: true,
+      desc: this.descInitial,
     };
+  },
+  props: {
+    descInitial: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     itemsArrOrdered() {
