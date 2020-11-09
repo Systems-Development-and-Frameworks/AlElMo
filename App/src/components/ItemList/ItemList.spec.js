@@ -1,8 +1,8 @@
 
 import { createLocalVue, mount } from '@vue/test-utils';
 import ItemList from './ItemList.vue';
-import Item from '../Item.vue';
-import EmptyItemList from '../EmptyItemList.vue';
+import Item from '../Item/Item.vue';
+import EmptyItemList from '../EmptyItemList/EmptyItemList.vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 const localVue = createLocalVue();
