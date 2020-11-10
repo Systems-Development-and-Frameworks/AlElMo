@@ -1,11 +1,11 @@
 <template>
-  <div>{{ text }}</div>
+  <div>{{ message }}</div>
 </template>
 
 <script>
 export default {
   props: {
-    text: {
+    message: {
       type: String,
       default: "List is empty :(",
     },
