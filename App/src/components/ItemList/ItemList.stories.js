@@ -24,26 +24,22 @@ const Template = (args, { argTypes }) => ({
 
 export const Descending = Template.bind({});
 Descending.args = {
-  ...Descending.args,
   descInitial: true,
 };
 
 export const Ascending = Template.bind({});
 Ascending.args = {
-  ...Ascending.args,
   descInitial: false,
 };
 
 export const EmptyList = Template.bind({});
 EmptyList.args = {
-  ...EmptyList.args,
   initialItemsArr: [],
   descInitial: true,
 };
 
 export const NonemptyTitle = Template.bind({});
 NonemptyTitle.args = {
-  ...NonemptyTitle.args,
   descInitial: true,
   initialTitle: "Ro"
 };
