@@ -1,4 +1,4 @@
-import Item from './Item'
+import Item from './Item';
 
 export default {
   title: 'Item',
@@ -12,11 +12,20 @@ export default {
 const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { Item },
-  template: '<Item :item="item" @remove="remove" @changeVotes="changeVotes" v-bind="$props"/>',
-})
+  template: '<item :item="item" @remove="remove" @changeVotes="changeVotes" v-bind="$props"/>',
+});
 
-export const SingleItem = Template.bind({});
+export const ZeroItem = Template.bind({});
+ZeroItem.args = {
+  item: { id: '1', title: 'Zero', votes: 0 },
+};
 
-SingleItem.args = {
-  item: { id: '1', title: 'test', votes: 0 },
-}
+export const PositiveItem = Template.bind({});
+PositiveItem.args = {
+  item: { id: '1', title: 'Positive', votes: 99 },
+};
+
+export const NegativeItem = Template.bind({});
+NegativeItem.args = {
+  item: { id: '1', title: 'Negative', votes: -99 },
+};

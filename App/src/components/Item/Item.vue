@@ -1,12 +1,30 @@
 <template>
   <b-row class="mb-3">
-    <b-col cols="12">
+    <b-col
+      cols="12"
+      :style="textColor"
+    >
       <h1>{{ title }} ({{ votes }})</h1>
     </b-col>
     <b-col>
-      <b-button class="m-1" @click="changeVotes(1)"> Upvote </b-button>
-      <b-button class="m-1" @click="changeVotes(-1)"> Downvote </b-button>
-      <b-button class="m-1" @click="remove"> Remove </b-button>
+      <b-button
+        class="m-1"
+        @click="changeVotes(1)"
+      >
+        Upvote
+      </b-button>
+      <b-button
+        class="m-1"
+        @click="changeVotes(-1)"
+      >
+        Downvote
+      </b-button>
+      <b-button
+        class="m-1"
+        @click="remove"
+      >
+        Remove
+      </b-button>
     </b-col>
   </b-row>
 </template>
@@ -31,6 +49,16 @@ export default {
     },
     votes() {
       return this.item.votes;
+    },
+    textColor() {
+      let color = "black";
+      if (this.item.votes > 0) {
+        color = "green";
+      }
+      if (this.item.votes < 0) {
+        color = "red";
+      }
+      return `color: ${color};`;
     },
   },
   methods: {

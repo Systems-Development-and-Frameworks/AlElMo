@@ -1,4 +1,4 @@
-import EmptyItemList from './EmptyItemList'
+import EmptyItemList from './EmptyItemList';
 
 export default {
     title: 'EmptyItemList',
@@ -14,9 +14,9 @@ export default {
 const Template = (args, { argTypes }) => ({
     components: { EmptyItemList },
     template: '<EmptyItemList v-bind="$props"/>',
-})
+});
 
-export const EmptyList = Template.bind({})
+export const EmptyList = Template.bind({});
 EmptyList.args = {
     // message: "empty list message",
-}
+};
