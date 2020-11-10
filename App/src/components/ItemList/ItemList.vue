@@ -1,6 +1,9 @@
 <template>
-  <b-container>
-    <item-list-header :desc="desc" @click="toggleOrdering" />
+  <b-container class="text-center">
+    <item-list-header
+      :desc="desc"
+      @toggleOrder="toggleOrdering"
+    />
     <template v-if="itemsArr.length">
       <item
         v-for="item in itemsArrOrdered"
@@ -11,7 +14,10 @@
       />
     </template>
     <empty-item-list v-else />
-    <add-item-form @addItem="addItem" />
+    <add-item-form
+      :initial-title="initialTitle"
+      @addItem="addItem"
+    />
   </b-container>
 </template>
 
@@ -21,6 +27,14 @@ import AddItemForm from "../AddItemForm/AddItemForm.vue";
 import EmptyItemList from "../EmptyItemList/EmptyItemList.vue";
 import ItemListHeader from "../ItemListHeader/ItemListHeader.vue";
 
+const getInitialArr = function () {
+  return [
+    { id: 1, title: "Al", votes: 3 },
+    { id: 2, title: "El", votes: 5 },
+    { id: 3, title: "Mo", votes: 1 },
+  ];
+};
+
 export default {
   components: {
     Item,
@@ -28,21 +42,25 @@ export default {
     EmptyItemList,
     ItemListHeader,
   },
-  data() {
-    return {
-      itemsArr: [
-        { id: 1, title: "Al", votes: 3 },
-        { id: 2, title: "El", votes: 5 },
-        { id: 3, title: "Mo", votes: 1 },
-      ],
-      desc: this.descInitial,
-    };
-  },
   props: {
+    initialTitle: {
+      type: String,
+      default: "",
+    },
     descInitial: {
       type: Boolean,
       default: true,
     },
+    initialItemsArr: {
+      type: Boolean,
+      default: getInitialArr,
+    },
+  },
+  data() {
+    return {
+      itemsArr: this.initialItemsArr,
+      desc: this.descInitial,
+    };
   },
   computed: {
     itemsArrOrdered() {

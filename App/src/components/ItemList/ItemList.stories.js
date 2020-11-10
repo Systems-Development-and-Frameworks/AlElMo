@@ -1,5 +1,4 @@
-import ItemList from './ItemList'
-import { Descending, Ascending } from '../ItemListHeader/ItemListHeader.stories'
+import ItemList from './ItemList';
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,30 +10,40 @@ export default {
   title: 'ItemList',
   compontent: ItemList,
   argTypes: {
-    desc: { table: { disable: true } },
     descInitial: { table: { disable: true } },
+    initialItemsArr: { table: { disable: true } },
+    initialTitle: { control: 'text' }
   }
 };
 
 const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { ItemList },
-  template: '<ItemList v-bind="$props"/>',
-})
+  template: '<item-list v-bind="$props"/>',
+});
 
-export const DescendingList = Template.bind({});
-DescendingList.args = {
+export const Descending = Template.bind({});
+Descending.args = {
   ...Descending.args,
   descInitial: true,
 };
 
-export const AscendingList = Template.bind({});
-AscendingList.args = {
+export const Ascending = Template.bind({});
+Ascending.args = {
   ...Ascending.args,
   descInitial: false,
 };
 
-/*
 export const EmptyList = Template.bind({});
-  //Todo: remove all items in itemsArr
-*/
+EmptyList.args = {
+  ...EmptyList.args,
+  initialItemsArr: [],
+  descInitial: true,
+};
+
+export const NonemptyTitle = Template.bind({});
+NonemptyTitle.args = {
+  ...NonemptyTitle.args,
+  descInitial: true,
+  initialTitle: "Ro"
+};
