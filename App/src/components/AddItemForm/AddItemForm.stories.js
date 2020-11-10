@@ -1,26 +1,23 @@
-import AddItemForm from './AddItemForm'
+import AddItemForm from './AddItemForm';
 
 export default {
   title: 'AddItemForm',
   compontent: AddItemForm,
   argTypes: {
     addItem: { action: 'addItem', table: { disable: true } },
-    placeholderForm: { control: 'text' }
+    initialTitle: { control: 'text' }
   }
 };
 
 const Template = (args, { argTypes }) => ({
   props: Object.keys(argTypes),
   components: { AddItemForm },
-  template: '<AddItemForm @addItem="addItem" v-bind="$props"/>',
-})
+  template: '<add-item-form @addItem="addItem" v-bind="$props"/>',
+});
 
-export const placeholderForm = Template.bind({})
-placeholderForm.args = {
-  placeholderForm: "this is a placeholder"
-}
+export const EmptyTitle = Template.bind({});
 
-export const emptyForm = Template.bind({})
-emptyForm.args = {
-  placeholderForm: ""
-}
+export const NonemptyTitle = Template.bind({});
+NonemptyTitle.args = {
+  initialTitle: "Ro"
+};
