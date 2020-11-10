@@ -32,8 +32,9 @@ export const AscendingList = Template.bind({});
 AscendingList.args = {
   ...Ascending.args,
   descInitial: false,
-  //Todo: change value of ItemList.desc
 };
 
+/*
 export const EmptyList = Template.bind({});
   //Todo: remove all items in itemsArr
+*/
