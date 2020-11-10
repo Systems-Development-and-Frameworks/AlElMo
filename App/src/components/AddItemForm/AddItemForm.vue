@@ -7,20 +7,28 @@
 
 <script>
 export default {
+  props: {
+    initialTitle: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
-      title: "",
+      title: this.initialTitle,
     };
   },
-  props: {
-    placeholderForm: {
-      type: String,
-      default: "type here",
+  computed: {
+    disabled() {
+      return this.title.length === 0;
     },
   },
   methods: {
     addItem() {
-      this.$emit("addItem", { title: this.title });
+      if (this.title.length) {
+        this.$emit("addItem", { title: this.title });
+        this.title = "";
+      }
     },
   },
 };

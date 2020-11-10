@@ -32,6 +32,16 @@ export default {
     votes() {
       return this.item.votes;
     },
+    textColor() {
+      let color = "black";
+      if (this.item.votes > 0) {
+        color = "green";
+      }
+      if (this.item.votes < 0) {
+        color = "red";
+      }
+      return `color: ${color};`;
+    },
   },
   methods: {
     changeVotes(vote) {
