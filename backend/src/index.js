@@ -1,28 +1,24 @@
-/* eslint-disable no-console */
-import { ApolloServer } from 'apollo-server';
-import datasource from './main/datasource';
-import InMemoryDataSource from './main/InMemoryDataSource';
-import resolvers from './resolver';
-import typeDefs from './typeDefs';
+const { ApolloServer, gql } = require('apollo-server');
 
-const { users, posts } = datasource;
-const db = new InMemoryDataSource(users, posts);
-const dataSources = () => ({ db });
-const context = ({ req, res }) => ({ req, res });
-const opts = {
-  settings: {
-    'schema.polling.enable': false,
-  },
-};
+// Resolvers define the technique for fetching the types defined in the
+// schema. This resolver retrieves books from the "books" array above.
+const resolvers = require('./resolver.js');
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources,
-  context,
-  opts,
-});
+// A schema is a collection of type definitions (hence "typeDefs")
+// that together define the "shape" of queries that are executed against
+// your data.
+const typeDefs = require('./typeDefs.js');
 
+
+
+
+
+
+// The ApolloServer constructor requires two parameters: your schema
+// definition and your set of resolvers.
+const server = new ApolloServer({ typeDefs, resolvers });
+
+// The `listen` method launches a web server.
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });

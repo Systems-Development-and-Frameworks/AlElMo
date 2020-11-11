@@ -1,19 +1,8 @@
 {
     "extends": [
-        "airbnb-base"
+        "plugin:vue/recommended"
     ],
     "rules": {
-        "semi": [
-            2,
-            "always"
-        ],
-        "consistent-return": "off",
-        "class-methods-use-this": "off"
-    },
-    "plugins": [
-        "jest"
-    ],
-    "env": {
-        "jest/globals": true
+        "semi": 2
     }
 }

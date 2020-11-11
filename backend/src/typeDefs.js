@@ -1,38 +1,21 @@
-import { gql } from 'apollo-server';
+const { gql } = require('apollo-server');
 
-export default gql`
-  type Post {
-    id: ID!
-    title: String!
-    votes: Int!
-    author: User!
-    upvotes: [String]
-    downvotes: [String]
-  }
 
-  type User {
-    name: ID!
-    posts: [Post]
-  }
+module.exports = gql`
+# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  type Query {
-    posts: [Post]
-    users: [User]
-  }
+# This "Book" type defines the queryable fields for every book in our data source.
+type Book {
+  title: String
+  author: String
+}
 
-  type Mutation {
-    write(post: PostInput!): Post
-    delete(id: ID!): Post
-    upvote(id: ID!, voter: UserInput!): Post
-    downvote(id: ID!, voter: UserInput!): Post
-  }
-
-  input PostInput {
-    title: String!
-    author: UserInput!
-  }
-
-  input UserInput {
-    name: String!
-  }
+# The "Query" type is special: it lists all of the available queries that
+# clients can execute, along with the return type for each. In this
+# case, the "books" query returns an array of zero or more Books (defined above).
+type Query {
+  books: [Book]
+}
 `;
+
+
