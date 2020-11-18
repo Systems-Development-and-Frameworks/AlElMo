@@ -2,29 +2,48 @@ const { gql } = require('apollo-server');
 
 
 module.exports = gql`
-# Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+  type Post {
+    id: ID!
+    title: String!
+    votes: Int!
+    author: User!
+    usersUpvoted: [String]
+  }
 
-# This "Book" type defines the queryable fields for every book in our data source.
-type Post {
-  id: ID!
-  title: String!
-  votes: Int!
-  author: User!
-}
+  type User {
+    name: ID!
+    posts: [Post]
+  }
 
-type User {
-  name: ID!
-  posts: [Post]
-}
+  type Query {
+    posts: [Post]
+    users: [User]
+  }
 
+  type Mutation {
+    write(post: PostInput!): Post
+    # 🚀 OPTIONAL
+    # delete(id: ID!): Post
 
-# The "Query" type is special: it lists all of the available queries that
-# clients can execute, along with the return type for each. In this
-# case, the "books" query returns an array of zero or more Books (defined above).
-type Query {
-  posts: [Post],
-  users: [User]
-}
+    # ⚠️ FIXME in exercise #4
+    # mock voter until we have authentication
+    upvote(id: ID!, voter: UserInput!, value: Int): Post
+
+    # 🚀 OPTIONAL
+    # downvote(id: ID!, voter: UserInput!): Post
+  }
+
+  input PostInput {
+    title: String!
+
+    # ⚠️ FIXME in exercise #4
+    # mock author until we have authentication
+    author: UserInput!
+  }
+
+  input UserInput {
+    name: String!
+  }
 `;
 
 
