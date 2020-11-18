@@ -1,54 +1,27 @@
-
-
-const User1 = {
-  name: "3asdasd",
-  posts: [2]
-};
-
-
-
-var User2 = {
-  name: "4asdasdasd",
-  posts: [21]
-};
-
-
-const Post1 = {
-  id: 2,
-  title: "Hallo",
-  votes: 2,
-  author: "3asdasd"
-};
-
-const Posts = [
-  Post1,
-  {
-    id: 21,
-    title: "Hallo1",
-    votes: 21,
-    author: "4asdasdasd"
-  },
-];
-
-
-const Users = [User1, User2];
+import { Post, InMemoryDataSource } from './db'
 
 
 module.exports = {
   Query: {
-    posts: () => Posts,
-    users: () => Users
+    posts: (parent, args, context) => context.dataSources.db.posts,
+    users: (parent, args, context) => context.dataSources.db.users
   },
   Post: {
-    author(parent) {
-      return Users.find(user => user.name === parent.author);
+    author(parent, args, context) {
+      return context.dataSources.db.users.find(user => user.name === parent.author);
 
     }
   },
   User: {
-    posts(parent) {
-      return Posts.filter(post => parent.posts.includes(post.id));
+    posts(parent, args, context) {
+      return context.dataSources.db.posts.filter(post => parent.posts.includes(post.id));
     }
+  },
+
+  Mutation: {
+    write: (parent, args, context) => context.dataSources.db.createPost(args),
+    upvote: (parent, args, context) => context.dataSources.db.upvotePost(args)
   }
+}
 };
 
