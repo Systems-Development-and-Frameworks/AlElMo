@@ -2,7 +2,7 @@ const { DataSource } = require('apollo-datasource');
 const crypto = require('crypto');
 
 class Post {
-  constructor (data) {
+  constructor(data) {
     this.id = crypto.randomBytes(16).toString('hex');
     this.usersUpvoted = [];
     this.usersDownvoted = [];
@@ -13,7 +13,7 @@ class Post {
 }
 
 class User {
-  constructor (data) {
+  constructor(data) {
     // this.id = crypto.randomBytes(16).toString('hex')
     this.name = data.name;
     this.posts = [];
@@ -21,24 +21,24 @@ class User {
 }
 
 class InMemoryDataSource extends DataSource {
-  constructor (posts = [], users = []) {
+  constructor(posts = [], users = []) {
     super();
     this.posts = posts;
     this.users = users;
   }
 
-  initialize (...args) {
+  initialize(...args) {
     // console.log(args)
   }
 
   // Data: {id, title, votes, author, usersUpvoted[]}
-  createPost (data) {
+  createPost(data) {
     const userName = data.post.author.name;
     const user = this.users.find(u => u.name === userName);
     if (user) {
       const newPost = new Post(data);
       this.posts.push(newPost);
-      user.posts.push(newPost);
+      user.posts.push(newPost.id);
       return newPost;
     }
   }
@@ -50,7 +50,7 @@ class InMemoryDataSource extends DataSource {
         this.users.push(newUser)
         return newUser
     } */
-  upvotePost0 (data) {
+  upvotePost0(data) {
     const updatedPost = this.posts.find(post => post.id === data.id);
     const userName = data.voter.name;
     if (updatedPost) {
@@ -64,7 +64,7 @@ class InMemoryDataSource extends DataSource {
   }
 
   // Data : {postID, user, upvote-1/+1}
-  upvotePost ({ id: postId, voter = {} } = {}) {
+  upvotePost({ id: postId, voter = {} } = {}) {
     const updatedPost = this.posts.find(post => post.id === postId);
     const userName = voter.name;
     if (updatedPost) {
@@ -77,7 +77,7 @@ class InMemoryDataSource extends DataSource {
     }
   }
 
-  downvotePost ({ id: postId, voter = {} } = {}) {
+  downvotePost({ id: postId, voter = {} } = {}) {
     const updatedPost = this.posts.find(post => post.id === postId);
     const userName = voter.name;
     if (updatedPost) {
