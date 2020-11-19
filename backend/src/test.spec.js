@@ -89,6 +89,8 @@ describe('Testing Apollo Server', () => {
     expect(response.data.users[0].posts[0].title).toEqual('ABC');
     expect(response.data.users[0].posts[0].author.name).toEqual('Al');
   });
+  it('Mutation: Upvote', async () => {
+    // Setup Server
 
   it('Mutation: Create a post', async () => {
     const posts = [];

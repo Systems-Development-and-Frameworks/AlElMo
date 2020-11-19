@@ -12,25 +12,28 @@ const User3 = {
 };
 
 const Post1 = {
-  id: 1,
+  id: '1',
   title: 'ABC',
-  votes: 2,
+  votes: 0,
   author: 'Al',
-  usersUpvoted: []
+  usersUpvoted: [],
+  usersDownvoted: []
 };
 const Post2 = {
-  id: 2,
+  id: '2',
   title: 'DEF',
-  votes: 1,
+  votes: 0,
   author: 'El',
-  usersUpvoted: []
+  usersUpvoted: [],
+  usersDownvoted: []
 };
 const Post3 = {
-  id: 3,
+  id: '3',
   title: 'GHI',
   votes: 0,
   author: 'Mo',
-  usersUpvoted: []
+  usersUpvoted: [],
+  usersDownvoted: []
 };
 
 exports.Users = [User1, User2, User3];
