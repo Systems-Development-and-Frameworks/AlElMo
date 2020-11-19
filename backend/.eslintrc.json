@@ -1,8 +1,11 @@
 {
     "extends": [
-        "plugin:vue/recommended"
+        "eslint-config-standard"
     ],
     "rules": {
-        "semi": 2
+        "semi": [
+            2,
+            "always"
+        ]
     }
 }

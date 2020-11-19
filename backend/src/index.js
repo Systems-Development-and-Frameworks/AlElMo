@@ -1,13 +1,13 @@
-//init DB
-import { Post, InMemoryDataSource } from './db'
-const { Posts, Users } = require("./datasource")
-const db = new InMemoryDataSource(Posts, Users)
-const dataSources = () => ({ db })
+// init DB
+import { InMemoryDataSource } from './db';
+const { Posts, Users } = require('./datasource');
+const db = new InMemoryDataSource(Posts, Users);
+const dataSources = () => ({ db });
 
-//Server
-const { ApolloServer, gql } = require('apollo-server');
+// Server
+const { ApolloServer } = require('apollo-server');
 
-const context = ({ req, res }) => ({ req, res })
+const context = ({ req, res }) => ({ req, res });
 
 const resolvers = require('./resolver.js');
 
@@ -17,7 +17,7 @@ const opts = {
   settings: {
     'schema.polling.enable': false
   }
-}
+};
 
 const server = new ApolloServer({
   typeDefs,
@@ -30,4 +30,4 @@ const server = new ApolloServer({
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
-}); 
+});
