@@ -16,6 +16,7 @@ module.exports = {
 
   Mutation: {
     write: (parent, args, context) => context.dataSources.db.createPost(args),
-    upvote: (parent, args, context) => context.dataSources.db.upvotePost(args)
+    upvote: (parent, args, context) => context.dataSources.db.upvotePost(args),
+    downvote: (parent, args, context) => context.dataSources.db.downvotePost(args)
   }
 };
