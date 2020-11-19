@@ -1,5 +1,5 @@
 // init DB
-import { InMemoryDataSource } from './db';
+const { InMemoryDataSource } = require('./db');
 const { Posts, Users } = require('./datasource');
 const db = new InMemoryDataSource(Posts, Users);
 const dataSources = () => ({ db });
@@ -8,9 +8,7 @@ const dataSources = () => ({ db });
 const { ApolloServer } = require('apollo-server');
 
 const context = ({ req, res }) => ({ req, res });
-
 const resolvers = require('./resolver.js');
-
 const typeDefs = require('./typeDefs.js');
 
 const opts = {

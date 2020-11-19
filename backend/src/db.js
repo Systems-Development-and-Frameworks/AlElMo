@@ -1,7 +1,7 @@
-import { DataSource } from 'apollo-datasource';
-import crypto from 'crypto';
+const { DataSource } = require('apollo-datasource');
+const crypto = require('crypto');
 
-export class Post {
+class Post {
   constructor (data) {
     this.id = crypto.randomBytes(16).toString('hex');
     this.usersUpvoted = [];
@@ -12,14 +12,15 @@ export class Post {
   }
 }
 
-export class User {
+class User {
   constructor (data) {
     // this.id = crypto.randomBytes(16).toString('hex')
-    Object.assign(this, data);
+    this.name = data.name;
+    this.posts = [];
   }
 }
 
-export class InMemoryDataSource extends DataSource {
+class InMemoryDataSource extends DataSource {
   constructor (posts = [], users = []) {
     super();
     this.posts = posts;
@@ -32,10 +33,14 @@ export class InMemoryDataSource extends DataSource {
 
   // Data: {id, title, votes, author, usersUpvoted[]}
   createPost (data) {
-    console.log(data);
-    const newPost = new Post(data);
-    this.posts.push(newPost);
-    return newPost;
+    const userName = data.post.author.name;
+    const user = this.users.find(u => u.name === userName);
+    if (user) {
+      const newPost = new Post(data);
+      this.posts.push(newPost);
+      user.posts.push(newPost);
+      return newPost;
+    }
   }
 
   // Data : {name(ID), posts[] }
@@ -45,21 +50,21 @@ export class InMemoryDataSource extends DataSource {
         this.users.push(newUser)
         return newUser
     } */
-  upvotePost (data) {
-    const updatedPost = this.posts.find(post => post.id == data.id);
+  upvotePost0 (data) {
+    const updatedPost = this.posts.find(post => post.id === data.id);
     const userName = data.voter.name;
     if (updatedPost) {
       if (!updatedPost.usersUpvoted.includes(userName)) {
         updatedPost.votes += data.value;
         updatedPost.usersUpvoted.push(userName);
-        console.log(updatedPost);
+        // console.log(updatedPost);
       }
     }
     return updatedPost;
   }
 
   // Data : {postID, user, upvote-1/+1}
-  upvotePost2 ({ id: postId, voter = {} } = {}) {
+  upvotePost ({ id: postId, voter = {} } = {}) {
     const updatedPost = this.posts.find(post => post.id === postId);
     const userName = voter.name;
     if (updatedPost) {
@@ -85,3 +90,7 @@ export class InMemoryDataSource extends DataSource {
     }
   }
 }
+
+exports.Post = Post;
+exports.User = User;
+exports.InMemoryDataSource = InMemoryDataSource;
