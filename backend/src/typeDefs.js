@@ -7,6 +7,7 @@ module.exports = gql`
     votes: Int!
     author: User!
     usersUpvoted: [String]
+    usersDownvoted: [String]
   }
 
   type User {
@@ -26,10 +27,9 @@ module.exports = gql`
 
     # ⚠️ FIXME in exercise #4
     # mock voter until we have authentication
-    upvote(id: ID!, voter: UserInput!, value: Int): Post
-
+    upvote(id: ID!, voter: UserInput!): Post
     # 🚀 OPTIONAL
-    # downvote(id: ID!, voter: UserInput!): Post
+    downvote(id: ID!, voter: UserInput!): Post
   }
 
   input PostInput {
