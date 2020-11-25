@@ -15,7 +15,8 @@
     "apollo-server": "^2.19.0",
     "bcrypt": "^5.0.0",
     "esm": "^3.2.25",
-    "graphql": "^15.4.0"
+    "graphql": "^15.4.0",
+    "graphql-middleware": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

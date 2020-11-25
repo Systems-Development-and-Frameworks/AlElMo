@@ -34,8 +34,17 @@ export default class User {
   setPassword(password) {
     bcrypt.hash(password, 10, (err, hash) => {
       this.password = hash;
-      console.log(JSON.stringify(this, null, 2));
+      //console.log(JSON.stringify(this, null, 2));
     });
     return this;
+  }
+
+  comparePassword(password) {
+    const hashedpw = null;
+    bcrypt.hash(password, 10, (err, hash) => {
+      hashedpw = hash;
+      //console.log(JSON.stringify(this, null, 2));
+    });
+    return hashedpw === this.password;
   }
 }
