@@ -1,12 +1,14 @@
 {
     "extends": [
-        "eslint-config-standard"
+        "airbnb-base"
     ],
     "rules": {
         "semi": [
             2,
             "always"
-        ]
+        ],
+        "consistent-return": "off",
+        "class-methods-use-this": "off"
     },
     "plugins": [
         "jest"
