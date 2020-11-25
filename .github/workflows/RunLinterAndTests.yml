@@ -9,7 +9,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./App
+    working-directory: ./webapp
 
 jobs:
   build-test-lint:
