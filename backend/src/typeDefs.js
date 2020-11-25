@@ -1,13 +1,13 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server';
 
-module.exports = gql`
+export default gql`
   type Post {
     id: ID!
     title: String!
     votes: Int!
     author: User!
-    usersUpvoted: [String]
-    usersDownvoted: [String]
+    upvotes: [String]
+    downvotes: [String]
   }
 
   type User {
@@ -22,21 +22,13 @@ module.exports = gql`
 
   type Mutation {
     write(post: PostInput!): Post
-    # 🚀 OPTIONAL
-    # delete(id: ID!): Post
-
-    # ⚠️ FIXME in exercise #4
-    # mock voter until we have authentication
+    delete(id: ID!): Post
     upvote(id: ID!, voter: UserInput!): Post
-    # 🚀 OPTIONAL
     downvote(id: ID!, voter: UserInput!): Post
   }
 
   input PostInput {
     title: String!
-
-    # ⚠️ FIXME in exercise #4
-    # mock author until we have authentication
     author: UserInput!
   }
 
