@@ -20,5 +20,17 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run unit tests
+```
+npm run test:unit
+```
+
+### Run Storybook
+```
+npm run storybook
+```
+
+### Build Storybook
+```
+npm run storybook:build
+```

@@ -1,20 +1,18 @@
-// init DB
-const { InMemoryDataSource } = require('./db');
-const { Posts, Users } = require('./datasource');
-const db = new InMemoryDataSource(Posts, Users);
+/* eslint-disable no-console */
+import { ApolloServer } from 'apollo-server';
+import datasource from './main/datasource';
+import InMemoryDataSource from './main/InMemoryDataSource';
+import resolvers from './resolver';
+import typeDefs from './typeDefs';
+
+const { users, posts } = datasource;
+const db = new InMemoryDataSource(users, posts);
 const dataSources = () => ({ db });
-
-// Server
-const { ApolloServer } = require('apollo-server');
-
 const context = ({ req, res }) => ({ req, res });
-const resolvers = require('./resolver.js');
-const typeDefs = require('./typeDefs.js');
-
 const opts = {
   settings: {
-    'schema.polling.enable': false
-  }
+    'schema.polling.enable': false,
+  },
 };
 
 const server = new ApolloServer({
@@ -22,10 +20,9 @@ const server = new ApolloServer({
   resolvers,
   dataSources,
   context,
-  opts
+  opts,
 });
 
-// The `listen` method launches a web server.
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
