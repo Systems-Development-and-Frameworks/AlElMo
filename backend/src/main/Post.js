@@ -6,6 +6,7 @@ export default class Post {
       this.id = null;
       this.title = null;
       this.author = null;
+      // maybe refactor this away
       this.votes = null;
       this.upvotes = [];
       this.downvotes = [];

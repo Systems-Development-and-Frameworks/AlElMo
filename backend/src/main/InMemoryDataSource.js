@@ -33,6 +33,35 @@ export default class InMemoryDataSource extends DataSource {
     return crypto.randomBytes(16).toString('hex');
   }
 
+  getNewUserId() {
+    return crypto.randomBytes(16).toString('hex');
+  }
+
+  createUser(data) {
+    try {
+      const { email, password } = data;
+      const duplicateEmail = this.users.find((u) => u.email === email);
+      const id = this.getNewUserId();
+      if (password.length >= 8 && !duplicateEmail) {
+        const user = new User(data, id);
+        this.users.push(user);
+        return 'Hi user created';
+      }
+      throw Error('Password is either too short or there was a duplicate email address given!');
+    } catch (e) {
+      console.error(e);
+      return undefined;
+    }
+  }
+
+  loginUser(data) {
+    const { email, password } = date;
+    const correctPassword = this.users.find((u) => u.email === email && u.password === password);
+    if (correctPassword) {
+      // login user, and store session token or something
+    }
+  }
+
   createPost(data) {
     try {
       const { name } = data.post.author;
@@ -40,7 +69,6 @@ export default class InMemoryDataSource extends DataSource {
       if (user) {
         const post = new Post(data, this.getNewPostId());
         this.posts.push(post);
-        user.addPost(post.id);
         return post;
       }
     } catch (e) {
@@ -54,10 +82,6 @@ export default class InMemoryDataSource extends DataSource {
       const post = this.posts.find((p) => p.id === id);
       if (post) {
         this.posts = this.posts.filter((p) => p.id !== post.id);
-        const user = this.users.find((u) => u.name === post.author);
-        if (user) {
-          user.removePost(post.id);
-        }
         return post;
       }
     } catch (e) {

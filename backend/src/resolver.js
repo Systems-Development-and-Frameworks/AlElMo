@@ -10,7 +10,7 @@ export default {
   },
   User: {
     posts(parent, args, context) {
-      return context.dataSources.db.posts.filter((post) => parent.posts.includes(post.id));
+      return context.dataSources.db.posts.filter((post) => post.author === parent.name);
     },
   },
 
@@ -19,5 +19,7 @@ export default {
     delete: (parent, args, context) => context.dataSources.db.deletePost(args),
     upvote: (parent, args, context) => context.dataSources.db.upvotePost(args),
     downvote: (parent, args, context) => context.dataSources.db.downvotePost(args),
+    signup: (parent, args, context) => context.dataSources.db.createUser(args),
+    login: (parent, args, context) => context.dataSources.db.loginUser(args),
   },
 };

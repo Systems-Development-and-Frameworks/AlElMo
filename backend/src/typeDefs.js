@@ -11,7 +11,9 @@ export default gql`
   }
 
   type User {
-    name: ID!
+    id: ID!
+    name: String!
+    email: String!
     posts: [Post]
   }
 
@@ -25,6 +27,8 @@ export default gql`
     delete(id: ID!): Post
     upvote(id: ID!, voter: UserInput!): Post
     downvote(id: ID!, voter: UserInput!): Post
+    signup(name: String!, email: String!, password: String!): String
+    login(email: String!, password: String!): String
   }
 
   input PostInput {
