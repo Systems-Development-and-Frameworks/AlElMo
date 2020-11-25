@@ -56,7 +56,7 @@ export default class InMemoryDataSource extends DataSource {
 
   loginUser(data) {
     const { email, password } = date;
-    const correctPassword = this.users.find((u) => u.email === email && u.password === password);
+    const correctPassword = this.users.find((u) => u.email === email && u.comparePassword(password));
     if (correctPassword) {
       // login user, and store session token or something
     }
