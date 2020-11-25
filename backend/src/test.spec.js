@@ -26,9 +26,8 @@ const getPost = (id = '1', title = 'ABC', author = 'Al', upvotes = [], downvotes
     .setDownvotes(downvotes);
 };
 
-const getUser = (name = 'Al', posts = ['1']) => new User({ name })
-  .setName(name)
-  .setPosts(posts);
+const getUser = (name = 'Al') => new User({ name, email: `${name}@example.com`, password: '12345678' }, name)
+  .setName(name);
 
 const setupServer = (users, posts) => {
   const db = new InMemoryDataSource(users, posts);
@@ -86,8 +85,6 @@ describe('Testing Apollo Server', () => {
     expect(response.errors).toBeUndefined();
     expect(response.data.users.length).toEqual(1);
     expect(response.data.users[0].name).toEqual('Al');
-    expect(response.data.users[0].posts[0].title).toEqual('ABC');
-    expect(response.data.users[0].posts[0].author.name).toEqual('Al');
   });
 
   it('Mutation: Create a post', async () => {
@@ -102,7 +99,6 @@ describe('Testing Apollo Server', () => {
     expect(response.errors).toBeUndefined();
     expect(response.data.write.title).toEqual('ABC');
     expect(response.data.write.author.name).toEqual('Al');
-    expect(response.data.write.author.posts[0].id).toEqual(response.data.write.id);
   });
 
   it('Mutation: Delete a post', async () => {
@@ -115,14 +111,12 @@ describe('Testing Apollo Server', () => {
     const DELETE_POST = `mutation { delete(id: "${post.id}")
     { title, votes, author{name, posts{id}}, id}}`;
     expect(db.posts.length).toEqual(1);
-    expect(user.posts.length).toEqual(1);
     const response = await mutate({ mutation: DELETE_POST });
     expect(response.errors).toBeUndefined();
     expect(db.posts.length).toEqual(0);
     expect(response.data.delete.title).toEqual('ABC');
     expect(response.data.delete.title).toEqual('ABC');
     expect(response.data.delete.author.name).toEqual('Al');
-    expect(response.data.delete.author.posts.length).toEqual(0);
   });
 
   it('Mutation: Upvote', async () => {
