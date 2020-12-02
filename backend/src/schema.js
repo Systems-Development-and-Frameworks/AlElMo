@@ -1,12 +1,8 @@
-import { mergeSchemas } from '@graphql-tools/merge';
 import { applyMiddleware } from 'graphql-middleware';
 import { makeExecutableSchema } from 'apollo-server';
 import typeDefs from './typeDefs';
 import resolvers from './resolver';
 import permissions from './permissions';
-import context from './context';
-import datasource from './main/datasource';
-import InMemoryDataSource from './main/InMemoryDataSource';
 
 // import GraphCmsSchema from './graphCms/schema';
 /*

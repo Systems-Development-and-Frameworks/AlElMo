@@ -1,10 +1,7 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server';
-import { applyMiddleware } from 'graphql-middleware';
 import datasource from './main/datasource';
 import InMemoryDataSource from './main/InMemoryDataSource';
-import resolvers from './resolver';
-import typeDefs from './typeDefs';
 import context from './context';
 import Schema from './schema';
 
