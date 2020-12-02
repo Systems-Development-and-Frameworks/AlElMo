@@ -8,7 +8,11 @@
             "always"
         ],
         "consistent-return": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "linebreak-style": [
+            "error",
+            "windows"
+        ] // changes the file to CRLF
     },
     "plugins": [
         "jest"
