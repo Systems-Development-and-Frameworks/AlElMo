@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt';
 
+const salt = 9;
+
 export default class User {
   constructor(data, id) {
     const { name, email, password } = data;
@@ -32,18 +34,18 @@ export default class User {
   }
 
   setPassword(password) {
-    bcrypt.hash(password, 10, (err, hash) => {
+    bcrypt.hash(password, salt, (err, hash) => {
       this.password = hash;
-      //console.log(JSON.stringify(this, null, 2));
+      // console.log(JSON.stringify(this, null, 2));
     });
     return this;
   }
 
   comparePassword(password) {
-    const hashedpw = null;
-    bcrypt.hash(password, 10, (err, hash) => {
+    let hashedpw = null;
+    bcrypt.hash(password, salt, (err, hash) => {
       hashedpw = hash;
-      //console.log(JSON.stringify(this, null, 2));
+      // console.log(JSON.stringify(this, null, 2));
     });
     return hashedpw === this.password;
   }
