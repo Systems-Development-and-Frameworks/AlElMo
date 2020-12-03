@@ -4,6 +4,7 @@ import { DataSource } from 'apollo-datasource';
 import crypto from 'crypto';
 import Post from './Post';
 import User from './User';
+import Token from '../token';
 
 export default class InMemoryDataSource extends DataSource {
   constructor(users = [], posts = []) {
@@ -44,24 +45,27 @@ export default class InMemoryDataSource extends DataSource {
       const id = this.getNewUserId();
       if (password.length >= 8 && !duplicateEmail) {
         const user = new User(data, id);
+        console.log(Token.createAccessToken(id));
         this.users.push(user);
         return 'Hi user created';
       }
       throw Error('Password is either too short or there was a duplicate email address given!');
     } catch (e) {
       console.error(e);
-      return undefined;
+      return e;
     }
   }
 
-  loginUser(data) {
+  loginUser(data, context) {
     const { email, password } = data;
-    const correctPassword = this.users.find(
+    const foundUser = this.users.find(
       (u) => u.email === email && u.comparePassword(password),
     );
-    if (correctPassword) {
-      // login user, and store session token or something
+    if (foundUser) {
+      const userId = foundUser.id;
+      return context.jwtSign({ user: { id: userId } });
     }
+    return new Error('User not found or pw wrong');
   }
 
   createPost(data) {

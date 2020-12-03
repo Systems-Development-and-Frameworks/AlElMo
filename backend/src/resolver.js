@@ -20,6 +20,6 @@ export default {
     upvote: (parent, args, context) => context.dataSources.db.upvotePost(args),
     downvote: (parent, args, context) => context.dataSources.db.downvotePost(args),
     signup: (parent, args, context) => context.dataSources.db.createUser(args),
-    login: (parent, args, context) => context.dataSources.db.loginUser(args),
+    login: (parent, args, context) => context.dataSources.db.loginUser(args, context),
   },
 };
