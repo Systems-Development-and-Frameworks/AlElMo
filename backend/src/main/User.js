@@ -42,11 +42,6 @@ export default class User {
   }
 
   comparePassword(password) {
-    let hashedpw = null;
-    bcrypt.hash(password, salt, (err, hash) => {
-      hashedpw = hash;
-      // console.log(JSON.stringify(this, null, 2));
-    });
-    return hashedpw === this.password;
+    return bcrypt.compareSync(password, this.password);
   }
 }
