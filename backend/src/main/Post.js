@@ -2,21 +2,20 @@ export default class Post {
   constructor(data = {}, id) {
     const { post } = data;
     const { title, author = {} } = post;
-    if (title && author && author.name && id !== undefined) {
+    if (title && author && author.id && id !== undefined) {
       this.id = null;
       this.title = null;
       this.author = null;
-      // maybe refactor this away
       this.votes = null;
       this.upvotes = [];
       this.downvotes = [];
 
       this.setId(id)
-        .setTitle(data.post.title)
-        .setAuthor(data.post.author.name)
+        .setTitle(title)
+        .setAuthor(author.id)
         .updateVotes();
     } else {
-      const error = new Error(`A Post was instantiated with malformed data: ${data}`);
+      const error = new Error('A Post was instantiated with malformed data');
       error.name = 'IllegalArgumentException';
       throw error;
     }
@@ -32,8 +31,8 @@ export default class Post {
     return this;
   }
 
-  setAuthor(author) {
-    this.author = author;
+  setAuthor(id) {
+    this.author = id;
     return this;
   }
 

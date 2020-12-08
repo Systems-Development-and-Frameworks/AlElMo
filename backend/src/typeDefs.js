@@ -6,8 +6,6 @@ export default gql`
     title: String!
     votes: Int!
     author: User!
-    upvotes: [String]
-    downvotes: [String]
   }
 
   type User {
@@ -25,18 +23,13 @@ export default gql`
   type Mutation {
     write(post: PostInput!): Post
     delete(id: ID!): Post
-    upvote(id: ID!, voter: UserInput!): Post
-    downvote(id: ID!, voter: UserInput!): Post
+    upvote(id: ID!): Post
+    downvote(id: ID): Post
     signup(name: String!, email: String!, password: String!): String
     login(email: String!, password: String!): String
   }
 
   input PostInput {
     title: String!
-    author: UserInput!
-  }
-
-  input UserInput {
-    name: String!
   }
 `;
