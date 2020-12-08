@@ -8,12 +8,12 @@ const context = ({ req }) => {
   const jwtSign = (payload) => jwt.sign(payload, process.env.JWT_SECRET);
 
   try {
-    const userID = jwt.verify(
+    const user = jwt.verify(
       token,
       process.env.JWT_SECRET,
     );
-    console.log('userID');
-    return { userID /* , jwtSign */ };
+
+    return { user, jwtSign };
   } catch (e) {
     return { jwtSign };
   }

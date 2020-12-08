@@ -4,7 +4,6 @@ import { DataSource } from 'apollo-datasource';
 import crypto from 'crypto';
 import Post from './Post';
 import User from './User';
-import Token from '../token';
 
 export default class InMemoryDataSource extends DataSource {
   constructor(users = [], posts = []) {
@@ -38,71 +37,91 @@ export default class InMemoryDataSource extends DataSource {
     return crypto.randomBytes(16).toString('hex');
   }
 
-  createUser(data) {
+  createUser(data, context) {
     try {
       const { email, password } = data;
       const duplicateEmail = this.users.find((u) => u.email === email);
+      const passwordSufficient = password.length >= 8;
       const id = this.getNewUserId();
-      if (password.length >= 8 && !duplicateEmail) {
+      if (passwordSufficient && !duplicateEmail) {
         const user = new User(data, id);
-        console.log(Token.createAccessToken(id));
         this.users.push(user);
-        return 'Hi user created';
+        return context.jwtSign({ id: user.id });
       }
-      throw Error('Password is either too short or there was a duplicate email address given!');
+      if (duplicateEmail) {
+        return new Error('Email address already taken');
+      }
+      return new Error('Password is too short');
     } catch (e) {
-      console.error(e);
       return e;
     }
   }
 
   loginUser(data, context) {
     const { email, password } = data;
-    const foundUser = this.users.find(
-      (u) => u.email === email && u.comparePassword(password),
-    );
-    if (foundUser) {
-      const userId = foundUser.id;
-      return context.jwtSign({ user: { id: userId } });
+    const user = this.users.find((u) => u.email === email);
+    const correctPassword = user.comparePassword(password);
+    if (user && correctPassword) {
+      return context.jwtSign({ id: user.id });
     }
-    return new Error('User not found or pw wrong');
+    if (!user) {
+      return new Error('Email not found');
+    }
+    return new Error('Wrong password');
   }
 
-  createPost(data) {
+  createPost(data, context) {
     try {
-      const { name } = data.post.author;
-      const user = this.users.find((u) => u.name === name);
+      const { id: author } = context.user;
+      const user = this.users.find((u) => u.id === author);
       if (user) {
-        const post = new Post(data, this.getNewPostId());
+        const postData = {
+          post: {
+            title: data.post.title,
+            author: {
+              id: user.id,
+            },
+          },
+
+        };
+        const post = new Post(postData, this.getNewPostId());
         this.posts.push(post);
         return post;
       }
+      return new Error('User not found');
     } catch (e) {
-      console.error(e);
-      return undefined;
+      return e;
     }
   }
 
-  deletePost({ id } = {}) {
-    try {
-      const post = this.posts.find((p) => p.id === id);
-      if (post) {
-        this.posts = this.posts.filter((p) => p.id !== post.id);
-        return post;
-      }
-    } catch (e) {
-      console.error(e);
-      return undefined;
+  deletePost({ id: postId } = {}, context) {
+    const { id: author } = context.user;
+    const user = this.users.find((u) => u.id === author);
+    const post = this.posts.find((p) => p.id === postId);
+    if (user && post && post.author === author) {
+      this.posts = this.posts.filter((p) => p.id !== post.id);
+      return post;
     }
+    return new Error('User or Post not found or User does not own the rights to delete the Post');
   }
 
-  upvotePost({ id, voter = {} } = {}) {
-    const post = this.posts.find((p) => p.id === id);
-    return post && post.upvote(voter.name);
+  upvotePost({ id: postId } = {}, context) {
+    const { id: author } = context.user;
+    const user = this.users.find((u) => u.id === author);
+    const post = this.posts.find((p) => p.id === postId);
+    if (user && post) {
+      return post.upvote(author);
+    }
+    return new Error('User or Post not found');
   }
 
-  downvotePost({ id, voter = {} } = {}) {
-    const post = this.posts.find((p) => p.id === id);
-    return post && post.downvote(voter.name);
+  downvotePost({ id: postId } = {}, context) {
+    const { id: author } = context.user;
+    const user = this.users.find((u) => u.id === author);
+    const post = this.posts.find((p) => p.id === postId);
+    if (user && post) {
+      return post.downvote(author);
+    }
+    return new Error('User or Post not found');
   }
 }

@@ -6,7 +6,7 @@ function createPost(id, title, author) {
     post: {
       title,
       author: {
-        name: author.name,
+        id: author.id,
       },
     },
   };

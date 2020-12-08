@@ -14,7 +14,7 @@ const getPost = (id = '1', title = 'ABC', author = 'Al', upvotes = [], downvotes
     post: {
       title,
       author: {
-        name: author,
+        id: author,
       },
     },
   };
@@ -95,7 +95,7 @@ describe('Testing Apollo Server', () => {
     const { mutate } = setupServer(users, posts);
 
     const post = getPost();
-    const CREATE_POST = `mutation { write(post: {title:"${post.title}", author:{name:"${post.author}"}})
+    const CREATE_POST = `mutation { write(post: {title:"${post.title}"})
     { title, votes, author{name, posts{id}}, id}}`;
     const response = await mutate({ mutation: CREATE_POST });
     expect(response.errors).toBeUndefined();
@@ -130,15 +130,14 @@ describe('Testing Apollo Server', () => {
     const { mutate } = setupServer(users, posts);
 
     const UPVOTE_POST = `mutation {
-      upvote (id:"${post.id}", voter: {name:"${user.name}"}){
-         title, votes, author{name}, id, upvotes
+      upvote (id:"${post.id}"){
+         title, votes, author{name},
        }
      }`;
     const response = await mutate({ mutation: UPVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.upvote.title).toEqual('ABC');
     expect(response.data.upvote.votes).toEqual(1);
-    expect(response.data.upvote.upvotes[0]).toEqual('Al');
   });
 
   it('Mutation: Double Upvote from same user should not be double upvote', async () => {
@@ -150,20 +149,18 @@ describe('Testing Apollo Server', () => {
     const { mutate } = setupServer(users, posts);
 
     const UPVOTE_POST = `mutation {
-      upvote (id:"${post.id}", voter: {name:"${user.name}"}){
-         title, votes, author{name}, id, upvotes
+      upvote (id:"${post.id}"){
+         title, votes, author{name}, id
        }
      }`;
     let response = await mutate({ mutation: UPVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.upvote.title).toEqual('ABC');
     expect(response.data.upvote.votes).toEqual(1);
-    expect(response.data.upvote.upvotes[0]).toEqual('Al');
     response = await mutate({ mutation: UPVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.upvote.title).toEqual('ABC');
     expect(response.data.upvote.votes).toEqual(1);
-    expect(response.data.upvote.upvotes[0]).toEqual('Al');
   });
 
   it('Mutation: Downvote', async () => {
@@ -175,15 +172,14 @@ describe('Testing Apollo Server', () => {
     const { mutate } = setupServer(users, posts);
 
     const DOWNVOTE_POST = `mutation {
-      downvote (id:"${post.id}", voter: {name:"${user.name}"}){
-         title, votes, author{name}, id, downvotes
+      downvote (id:"${post.id}"){
+         title, votes, author{name}, id
        }
      }`;
     const response = await mutate({ mutation: DOWNVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.downvote.title).toEqual('ABC');
     expect(response.data.downvote.votes).toEqual(-1);
-    expect(response.data.downvote.downvotes[0]).toEqual('Al');
   });
 
   it('Mutation: First Upvote then Downvote from same user should overwrite the upvote and vote = -1', async () => {
@@ -195,25 +191,23 @@ describe('Testing Apollo Server', () => {
     const { mutate } = setupServer(users, posts);
 
     const UPVOTE_POST = `mutation {
-      upvote (id:"${post.id}", voter: {name:"${user.name}"}){
-         title, votes, author{name}, id, upvotes
+      upvote (id:"${post.id}"){
+         title, votes, author{name}, id
        }
      }`;
     let response = await mutate({ mutation: UPVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.upvote.title).toEqual('ABC');
     expect(response.data.upvote.votes).toEqual(1);
-    expect(response.data.upvote.upvotes[0]).toEqual('Al');
 
     const DOWNVOTE_POST = `mutation {
-      downvote (id:"${post.id}", voter: {name:"${user.name}"}){
-         title, votes, author{name}, id, downvotes
+      downvote (id:"${post.id}"){
+         title, votes, author{name}, id
        }
      }`;
     response = await mutate({ mutation: DOWNVOTE_POST });
     expect(response.errors).toBeUndefined();
     expect(response.data.downvote.title).toEqual('ABC');
     expect(response.data.downvote.votes).toEqual(-1);
-    expect(response.data.downvote.downvotes[0]).toEqual('Al');
   });
 });
