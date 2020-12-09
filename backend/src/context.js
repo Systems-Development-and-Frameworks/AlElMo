@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
+import { config as initEnv } from 'dotenv';
 
-require('dotenv').config();
+initEnv();
 
 const context = ({ req }) => {
-  let token = req.headers.authorization || '';
-  token = token.replace('Bearer ', '');
+  const token = String(req.headers.authorization).replace('Bearer ', '');
   const jwtSign = (payload) => jwt.sign(payload, process.env.JWT_SECRET);
 
   try {

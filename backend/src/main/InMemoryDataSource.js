@@ -6,6 +6,18 @@ import Post from './Post';
 import User from './User';
 
 export default class InMemoryDataSource extends DataSource {
+  /**
+   * Should be rewritten later to create unique id's based
+   * on post id's already in the database
+   */
+  static getNewPostId() {
+    return crypto.randomBytes(16).toString('hex');
+  }
+
+  static getNewUserId() {
+    return crypto.randomBytes(16).toString('hex');
+  }
+
   constructor(users = [], posts = []) {
     super();
 
@@ -25,24 +37,12 @@ export default class InMemoryDataSource extends DataSource {
     }
   }
 
-  /**
-   * Should be rewritten later to create unique id's based
-   * on post id's already in the database
-   */
-  getNewPostId() {
-    return crypto.randomBytes(16).toString('hex');
-  }
-
-  getNewUserId() {
-    return crypto.randomBytes(16).toString('hex');
-  }
-
   createUser(data, context) {
     try {
       const { email, password } = data;
       const duplicateEmail = this.users.find((u) => u.email === email);
       const passwordSufficient = password.length >= 8;
-      const id = this.getNewUserId();
+      const id = InMemoryDataSource.getNewUserId();
       if (passwordSufficient && !duplicateEmail) {
         const user = new User(data, id);
         this.users.push(user);
@@ -60,12 +60,12 @@ export default class InMemoryDataSource extends DataSource {
   loginUser(data, context) {
     const { email, password } = data;
     const user = this.users.find((u) => u.email === email);
-    const correctPassword = user.comparePassword(password);
+    const correctPassword = user && user.comparePassword(password);
     if (user && correctPassword) {
       return context.jwtSign({ id: user.id });
     }
     if (!user) {
-      return new Error('Wrong email');
+      return new Error('Unknown user');
     }
     return new Error('Wrong password');
   }
@@ -84,7 +84,7 @@ export default class InMemoryDataSource extends DataSource {
           },
 
         };
-        const post = new Post(postData, this.getNewPostId());
+        const post = new Post(postData, InMemoryDataSource.getNewPostId());
         this.posts.push(post);
         return post;
       }
