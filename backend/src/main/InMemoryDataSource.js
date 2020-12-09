@@ -65,7 +65,7 @@ export default class InMemoryDataSource extends DataSource {
       return context.jwtSign({ id: user.id });
     }
     if (!user) {
-      return new Error('Email not found');
+      return new Error('Wrong email');
     }
     return new Error('Wrong password');
   }
@@ -102,7 +102,13 @@ export default class InMemoryDataSource extends DataSource {
       this.posts = this.posts.filter((p) => p.id !== post.id);
       return post;
     }
-    return new Error('User or Post not found or User does not own the rights to delete the Post');
+    if (!user) {
+      return new Error('User not found');
+    }
+    if (!post) {
+      return new Error('Post not found');
+    }
+    return new Error('User does not own the rights to delete the post');
   }
 
   upvotePost({ id: postId } = {}, context) {
@@ -112,7 +118,10 @@ export default class InMemoryDataSource extends DataSource {
     if (user && post) {
       return post.upvote(author);
     }
-    return new Error('User or Post not found');
+    if (!user) {
+      return new Error('User not found');
+    }
+    return new Error('Post not found');
   }
 
   downvotePost({ id: postId } = {}, context) {
@@ -122,6 +131,9 @@ export default class InMemoryDataSource extends DataSource {
     if (user && post) {
       return post.downvote(author);
     }
-    return new Error('User or Post not found');
+    if (!user) {
+      return new Error('User not found');
+    }
+    return new Error('Post not found');
   }
 }
