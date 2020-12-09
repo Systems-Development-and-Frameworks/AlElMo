@@ -34,10 +34,7 @@ export default class User {
   }
 
   setPassword(password) {
-    bcrypt.hash(password, salt, (err, hash) => {
-      this.password = hash;
-      // console.log(JSON.stringify(this, null, 2));
-    });
+    this.password = bcrypt.hashSync(password, salt);
     return this;
   }
 
