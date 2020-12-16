@@ -12,7 +12,7 @@ const permissions = shield({
   Query: {
     '*': deny,
     posts: allow,
-    users: allow,
+    persons: allow,
   },
   Mutation: {
     '*': deny,

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 import { DataSource } from 'apollo-datasource';
+import { delegateToSchema } from '@graphql-tools/delegate';
 import crypto from 'crypto';
 import Post from './Post';
 import User from './User';
@@ -42,7 +43,7 @@ export default class InMemoryDataSource extends DataSource {
       const { email, password } = data;
       const duplicateEmail = this.users.find((u) => u.email === email);
       const passwordSufficient = password.length >= 8;
-      const id = InMemoryDataSource.getNewUserId();
+      // const id = InMemoryDataSource.getNewUserId();
       if (passwordSufficient && !duplicateEmail) {
         const user = new User(data, id);
         this.users.push(user);

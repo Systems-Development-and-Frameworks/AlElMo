@@ -1,17 +1,16 @@
 export default {
   Query: {
-    posts: (parent, args, context) => context.dataSources.db.posts,
-    users: (parent, args, context) => context.dataSources.db.users,
+    // posts: (parent, args, context, info) =>
+    // context.dataSources.db.getPosts(args, context, info, subschema),
+    // persons: (parent, args, context) => context.dataSources.db.users,
   },
   Post: {
-    author(parent, args, context) {
-      return context.dataSources.db.users.find((user) => user.id === parent.author);
+    votes: {
+      selectionSet: '{usersUpvoted{id} usersDownvoted{id}}',
+      resolve: (post) => post.usersUpvoted.length - post.usersDownvoted.length,
     },
   },
-  User: {
-    posts(parent, args, context) {
-      return context.dataSources.db.posts.filter((post) => post.author === parent.id);
-    },
+  Person: {
   },
 
   Mutation: {
