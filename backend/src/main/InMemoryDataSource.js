@@ -2,7 +2,13 @@
 /* eslint-disable no-console */
 import { DataSource } from 'apollo-datasource';
 import { delegateToSchema } from '@graphql-tools/delegate';
+// import { GraphQLClient } from 'graphql-request';
+import { UserInputError, AuthenticationError, gql } from 'apollo-server';
+
+import bcrypt from 'bcrypt';
+
 import crypto from 'crypto';
+
 import Post from './Post';
 import User from './User';
 
@@ -38,61 +44,116 @@ export default class InMemoryDataSource extends DataSource {
     }
   }
 
-  createUser(data, context) {
-    try {
-      const { email, password } = data;
-      const duplicateEmail = this.users.find((u) => u.email === email);
-      const passwordSufficient = password.length >= 8;
-      // const id = InMemoryDataSource.getNewUserId();
-      if (passwordSufficient && !duplicateEmail) {
-        const user = new User(data, id);
-        this.users.push(user);
-        return context.jwtSign({ id: user.id });
+  // createUser(data, context) {
+  //   try {
+  //     const { email, password } = data;
+  //     const duplicateEmail = this.users.find((u) => u.email === email);
+  //     const passwordSufficient = password.length >= 8;
+  //     // const id = InMemoryDataSource.getNewUserId();
+  //     if (passwordSufficient && !duplicateEmail) {
+  //       const user = new User(data, id);
+  //       this.users.push(user);
+  //       return context.jwtSign({ id: user.id });
+  //     }
+  //     if (duplicateEmail) {
+  //       return new Error('Email address already taken');
+  //     }
+  //     return new Error('Password is too short');
+  //   } catch (e) {
+  //     return e;
+  //   }
+  // }
+
+  async createUser(args, context, executor) {
+    const document = gql`
+    mutation ($name: String!, $email: String!, $hashedPw: String!) {
+      createPerson(data: {name: $name, email: $email, hashedPw: $hashedPw}) {
+        id
       }
-      if (duplicateEmail) {
-        return new Error('Email address already taken');
-      }
-      return new Error('Password is too short');
-    } catch (e) {
-      return e;
     }
+    `;
+    const { name, email, password } = args;
+    const hashedPw = bcrypt.hashSync(password, 10);
+    const variables = { name, email, hashedPw };
+    const response = await executor({ document, variables });
+    const { data, errors } = response;
+    if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+    return context.jwtSign({ person: { id: data.createPerson.id } });
   }
 
-  loginUser(data, context) {
-    const { email, password } = data;
-    const user = this.users.find((u) => u.email === email);
-    const correctPassword = user && user.comparePassword(password);
-    if (user && correctPassword) {
-      return context.jwtSign({ id: user.id });
+  // loginUser(data, context) {
+  //   const { email, password } = data;
+  //   const user = this.users.find((u) => u.email === email);
+  //   const correctPassword = user && user.comparePassword(password);
+  //   if (user && correctPassword) {
+  //     return context.jwtSign({ id: user.id });
+  //   }
+  //   if (!user) {
+  //     return new Error('Unknown user');
+  //   }
+  //   return new Error('Wrong password');
+  // }
+
+  async loginUser(args, context, executor) {
+    const document = gql`
+    query ($email: String!) {
+      person(where: {email: $email}) {
+        id
+        hashedPw
+      }
     }
-    if (!user) {
-      return new Error('Unknown user');
+    `;
+    const response = await executor({ document, variables: args });
+    const { data, errors } = response;
+    if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+    const { person } = data;
+    if (person && bcrypt.compareSync(args.password, person.hashedPw)) {
+      return context.jwtSign({ user: { id: person.id } });
     }
-    return new Error('Wrong password');
+    throw new AuthenticationError('Wrong email/password combination');
   }
 
-  createPost(data, context) {
-    try {
-      const { id: author } = context.user;
-      const user = this.users.find((u) => u.id === author);
-      if (user) {
-        const postData = {
-          post: {
-            title: data.post.title,
-            author: {
-              id: user.id,
-            },
-          },
-
-        };
-        const post = new Post(postData, InMemoryDataSource.getNewPostId());
-        this.posts.push(post);
-        return post;
+  async createPost(args, context, info, schema) {
+    /* const document = gql`
+    mutation ($title: String!, $authorId: ID!) {
+      createPost(data: {title: $title
+        author: {connect: {id: $authorId}}})  {
+          id
+          title
+          author{
+            id
+          }
+        }
       }
-      return new Error('User not found');
-    } catch (e) {
-      return e;
-    }
+    `;
+    try {
+      const { id: authorId } = context.user.user;
+      console.log(authorId);
+      const { title } = args.post;
+      const variables = { title, authorId };
+      const response = await executor({ document, variables });
+      const { data, errors } = response;
+      if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+      */
+    const post = {
+      data: {
+        title: args.post.title,
+        author: {
+          connect: { id: context.user.user.id },
+        },
+      },
+    };
+    return delegateToSchema({
+      schema,
+      operation: 'mutation',
+      fieldName: 'createPost',
+      args: post,
+      context,
+      info,
+    });
+    /* } catch (error) {
+      return error;
+    } */
   }
 
   deletePost({ id: postId } = {}, context) {
@@ -112,18 +173,18 @@ export default class InMemoryDataSource extends DataSource {
     return new Error('User does not own the rights to delete the post');
   }
 
-  upvotePost({ id: postId } = {}, context) {
-    const { id: author } = context.user;
-    const user = this.users.find((u) => u.id === author);
-    const post = this.posts.find((p) => p.id === postId);
-    if (user && post) {
-      return post.upvote(author);
-    }
-    if (!user) {
-      return new Error('User not found');
-    }
-    return new Error('Post not found');
-  }
+  // upvotePost({ id: postId } = {}, context) {
+  //   const { id: author } = context.user;
+  //   const user = this.users.find((u) => u.id === author);
+  //   const post = this.posts.find((p) => p.id === postId);
+  //   if (user && post) {
+  //     return post.upvote(author);
+  //   }
+  //   if (!user) {
+  //     return new Error('User not found');
+  //   }
+  //   return new Error('Post not found');
+  // }
 
   downvotePost({ id: postId } = {}, context) {
     const { id: author } = context.user;
@@ -137,4 +198,20 @@ export default class InMemoryDataSource extends DataSource {
     }
     return new Error('Post not found');
   }
+
+  // async upvotePost(parent, args, context) {
+  //   const personId = context.user.id;
+  //   const postId = args.id;
+
+  //   const mutation = gql`
+  //       mutation($postId: ID!, $personId: ID!) {
+  //         updatePost(
+  //           where: { id: $postId }
+  //           data: { usersUpvoted: { connect: { where: { id: $personId } } } }
+  //         ) {
+  //           id
+  //         }
+  //       }
+  //     `;
+  // }
 }

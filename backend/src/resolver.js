@@ -1,4 +1,5 @@
-export default {
+export default ([{ schema, executor }]) => ({
+
   Query: {
     // posts: (parent, args, context, info) =>
     // context.dataSources.db.getPosts(args, context, info, subschema),
@@ -14,11 +15,12 @@ export default {
   },
 
   Mutation: {
-    write: (parent, args, context) => context.dataSources.db.createPost(args, context),
+    write:
+    (parent, args, context, info) => context.dataSources.db.createPost(args, context, info, schema),
     delete: (parent, args, context) => context.dataSources.db.deletePost(args, context),
     upvote: (parent, args, context) => context.dataSources.db.upvotePost(args, context),
     downvote: (parent, args, context) => context.dataSources.db.downvotePost(args, context),
-    signup: (parent, args, context) => context.dataSources.db.createUser(args, context),
-    login: (parent, args, context) => context.dataSources.db.loginUser(args, context),
+    signup: (parent, args, context) => context.dataSources.db.createUser(args, context, executor),
+    login: (parent, args, context) => context.dataSources.db.loginUser(args, context, executor),
   },
-};
+});

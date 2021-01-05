@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server';
-import datasource from './main/datasource';
+// import datasource from './main/datasource';
 import InMemoryDataSource from './main/InMemoryDataSource';
 import context from './context';
 import Schema from './schema';
 
-const { users, posts } = datasource;
-const db = new InMemoryDataSource(users, posts);
+// const { users, posts } = datasource;
+const db = new InMemoryDataSource();
 const dataSources = () => ({ db });
 // const context = ({ req, res }) => ({ req, res });
 const opts = {
@@ -16,7 +16,7 @@ const opts = {
 };
 
 (async () => {
-  const schema = await Schema();
+  const schema = (await Schema()).Schema;
   const server = await new ApolloServer({
     schema,
     context,
