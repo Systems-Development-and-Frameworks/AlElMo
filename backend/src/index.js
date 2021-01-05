@@ -8,7 +8,6 @@ import Schema from './schema';
 const { users, posts } = datasource;
 const db = new InMemoryDataSource(users, posts);
 const dataSources = () => ({ db });
-// const context = ({ req, res }) => ({ req, res });
 const opts = {
   settings: {
     'schema.polling.enable': false,
