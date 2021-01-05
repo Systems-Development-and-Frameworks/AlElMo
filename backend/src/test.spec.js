@@ -244,8 +244,7 @@ describe('Testing Apollo Server', () => {
     const SIGN_UP = generateSignupMutation(user);
     const response = await mutate({ mutation: SIGN_UP });
     expect(response.errors).toBeUndefined();
-    expect(typeof response.data.signup).toBe('string');
-    expect(response.data.signup.match(/[^\S]+/)).toBeNull();
+    expect(response.data.signup).toEqual(expect.any(String))
   });
 
   it('Mutation: Signup new user with incorrect password length but no duplicate email should not work', async () => {
