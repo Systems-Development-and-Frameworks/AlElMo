@@ -78,7 +78,7 @@ export default class InMemoryDataSource extends DataSource {
     const response = await executor({ document, variables });
     const { data, errors } = response;
     if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
-    return context.jwtSign({ person: { id: data.createPerson.id } });
+    return context.jwtSign({ id: data.createPerson.id });
   }
 
   // loginUser(data, context) {
@@ -108,7 +108,7 @@ export default class InMemoryDataSource extends DataSource {
     if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
     const { person } = data;
     if (person && bcrypt.compareSync(args.password, person.hashedPw)) {
-      return context.jwtSign({ user: { id: person.id } });
+      return context.jwtSign({ id: person.id });
     }
     throw new AuthenticationError('Wrong email/password combination');
   }
@@ -128,7 +128,6 @@ export default class InMemoryDataSource extends DataSource {
     `;
     try {
       const { id: authorId } = context.user.user;
-      console.log(authorId);
       const { title } = args.post;
       const variables = { title, authorId };
       const response = await executor({ document, variables });
@@ -139,7 +138,7 @@ export default class InMemoryDataSource extends DataSource {
       data: {
         title: args.post.title,
         author: {
-          connect: { id: context.user.user.id },
+          connect: { id: context.user.id },
         },
       },
     };
@@ -156,7 +155,7 @@ export default class InMemoryDataSource extends DataSource {
     } */
   }
 
-  deletePost({ id: postId } = {}, context) {
+  deletePostOld({ id: postId } = {}, context) {
     const { id: author } = context.user;
     const user = this.users.find((u) => u.id === author);
     const post = this.posts.find((p) => p.id === postId);
@@ -173,6 +172,34 @@ export default class InMemoryDataSource extends DataSource {
     return new Error('User does not own the rights to delete the post');
   }
 
+  async deletePost(args, context, executor) {
+    const { id: postId } = args;
+    const { id: personId } = context.user;
+    console.log(postId);
+    console.log(personId);
+
+    const document = gql`
+      mutation ($id: ID!) {
+        deletePost(
+          where: { 
+            id: $id
+          }
+        ) {
+          id
+          usersDownvoted { id }
+          usersUpvoted { id }
+        }
+      }
+    `;
+    const response = await executor({ document, variables: { id: postId } });
+    const { data, errors } = response;
+    if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+    const { deletePost: post } = data;
+    if (post) {
+      return post;
+    }
+  }
+
   // upvotePost({ id: postId } = {}, context) {
   //   const { id: author } = context.user;
   //   const user = this.users.find((u) => u.id === author);
@@ -185,6 +212,39 @@ export default class InMemoryDataSource extends DataSource {
   //   }
   //   return new Error('Post not found');
   // }
+
+  async upvotePost(args, context, executor) {
+    const { id: postId } = args;
+    const { id: personId } = context.user;
+    console.log(postId);
+    console.log(personId);
+
+    const document = gql`
+      mutation ($id: ID! $author: ID!) {
+        updatePost(
+          where: { 
+            id: $id 
+          }
+          data: { 
+            usersUpvoted: { connect: { id: $author } }
+            usersDownvoted:  { disconnect: { id: $author } } 
+          }
+        ) {
+          id
+          usersDownvoted { id }
+          usersUpvoted { id }
+        }
+      }
+    `;
+    const response = await executor({ document, variables: { id: postId, author: personId } });
+    const { data, errors } = response;
+    if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+    const { updatePost: post } = data;
+    if (post) {
+      return post;
+    }
+    // throw new AuthenticationError('Wrong email/password combination');
+  }
 
   downvotePost({ id: postId } = {}, context) {
     const { id: author } = context.user;
