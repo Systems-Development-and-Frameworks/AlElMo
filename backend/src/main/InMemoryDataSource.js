@@ -213,6 +213,33 @@ export default class InMemoryDataSource extends DataSource {
   //   return new Error('Post not found');
   // }
 
+  async upvotePost1(args, context, info, schema) {
+    const { id: postId } = args;
+    const { id: personId } = context.user;
+    const xxx = {
+      where: {
+        id: postId,
+      },
+      data: {
+        usersUpvoted: { connect: { where: { id: personId } } },
+      },
+    };
+    try {
+      const x = await delegateToSchema({
+        schema,
+        operation: 'mutation',
+        fieldName: 'updatePost',
+        args: xxx,
+        context,
+        info,
+      });
+      return x;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
   async upvotePost(args, context, executor) {
     const { id: postId } = args;
     const { id: personId } = context.user;
@@ -226,8 +253,8 @@ export default class InMemoryDataSource extends DataSource {
             id: $id 
           }
           data: { 
-            usersUpvoted: { connect: { id: $author } }
-            usersDownvoted:  { disconnect: { id: $author } } 
+            usersUpvoted: { connect: { where: { id: $author } }}
+            usersDownvoted: { disconnect:  { id: $author } }
           }
         ) {
           id
@@ -246,17 +273,36 @@ export default class InMemoryDataSource extends DataSource {
     // throw new AuthenticationError('Wrong email/password combination');
   }
 
-  downvotePost({ id: postId } = {}, context) {
-    const { id: author } = context.user;
-    const user = this.users.find((u) => u.id === author);
-    const post = this.posts.find((p) => p.id === postId);
-    if (user && post) {
-      return post.downvote(author);
+  async downvotePost(args, context, executor) {
+    const { id: postId } = args;
+    const { id: personId } = context.user;
+    console.log(postId);
+    console.log(personId);
+
+    const document = gql`
+      mutation ($id: ID! $author: ID!) {
+        updatePost(
+          where: { 
+            id: $id 
+          }
+          data: { 
+            usersDownvoted: { connect: { where: { id: $author } }}
+            usersUpvoted: { disconnect:  { id: $author } }
+          }
+        ) {
+          id
+          usersDownvoted { id }
+          usersUpvoted { id }
+        }
+      }
+    `;
+    const response = await executor({ document, variables: { id: postId, author: personId } });
+    const { data, errors } = response;
+    if (errors) throw new UserInputError(errors.map((e) => e.message).join('\n'));
+    const { updatePost: post } = data;
+    if (post) {
+      return post;
     }
-    if (!user) {
-      return new Error('User not found');
-    }
-    return new Error('Post not found');
   }
 
   // async upvotePost(parent, args, context) {
