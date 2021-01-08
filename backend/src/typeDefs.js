@@ -5,7 +5,6 @@ export default gql`
     votes: Int!
   }
 
-
   type Mutation {
     write(post: PostInput!): Post
     delete(id: ID!): Post

@@ -2,8 +2,6 @@ import { createTestClient } from 'apollo-server-testing';
 import { ApolloServer } from 'apollo-server';
 import jwt from 'jsonwebtoken';
 import InMemoryDataSource from './main/InMemoryDataSource';
-import Post from './main/Post';
-import User from './main/User';
 
 import resolvers from './resolver';
 import typeDefs from './typeDefs';
