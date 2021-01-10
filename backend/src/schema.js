@@ -1,10 +1,5 @@
 import { applyMiddleware } from 'graphql-middleware';
-import { makeExecutableSchema } from 'apollo-server';
-import { fetch } from 'cross-fetch';
-import { introspectSchema, wrapSchema } from '@graphql-tools/wrap';
 import { stitchSchemas } from '@graphql-tools/stitch';
-import { print } from 'graphql';
-// import { config as initEnv } from 'dotenv';
 import typeDefs from './typeDefs';
 import Resolvers from './resolver';
 import permissions from './permissions';
