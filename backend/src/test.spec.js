@@ -109,8 +109,6 @@ describe('Testing Apollo Server', () => {
     expect(response.data.users.length).toEqual(1);
     expect(response.data.users[0].name).toEqual('Al');
   });
-  it('Mutation: Upvote', async () => {
-    // Setup Server
 
   it('Mutation: Create a post', async () => {
     const user = getUser();
