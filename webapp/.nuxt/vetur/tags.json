@@ -17,6 +17,12 @@
   "LazyEmptyItemList": {
     "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/EmptyItemList/EmptyItemList.vue"
   },
+  "ItemListHeader": {
+    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+  },
+  "LazyItemListHeader": {
+    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+  },
   "Item": {
     "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/Item/Item.vue"
   },
@@ -29,10 +35,10 @@
   "LazyItemList": {
     "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemList/ItemList.vue"
   },
-  "ItemListHeader": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+  "LoginForm": {
+    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/LoginForm/LoginForm.vue"
   },
-  "LazyItemListHeader": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+  "LazyLoginForm": {
+    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/LoginForm/LoginForm.vue"
   }
 }

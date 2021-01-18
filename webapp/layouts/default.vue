@@ -1,8 +1,30 @@
 <template>
   <div>
+    <nuxt-link to="/login" v-if="!isAuthenticated">
+      Click to login lol
+    </nuxt-link>
+    <div @click="logout" v-else>Click to logout lol</div>
     <Nuxt />
   </div>
 </template>
+
+<script>
+import { mapState, mapGetters, mapMutations } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters("tokenStore", ["isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      this.deleteToken();
+    },
+    ...mapMutations("tokenStore", ["setToken", "deleteToken"]),
+  },
+};
+</script>
 
 <style>
 html {
