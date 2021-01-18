@@ -1,26 +1,20 @@
 import { applyMiddleware } from 'graphql-middleware';
-import { makeExecutableSchema } from 'apollo-server';
+import { stitchSchemas } from '@graphql-tools/stitch';
 import typeDefs from './typeDefs';
-import resolvers from './resolver';
+import Resolvers from './resolver';
 import permissions from './permissions';
-
-// import GraphCmsSchema from './graphCms/schema';
-/*
-const { users, posts } = datasource;
-const db = new InMemoryDataSource(users, posts);
-const dataSources = () => ({ db });
-
-const opts = {
-  settings: {
-    'schema.polling.enable': false,
-  },
-}; */
+import GraphCmsSchema, { executor } from './CmsSchema';
 
 export default async () => {
-  let gatewaySchema = makeExecutableSchema({
-    typeDefs,
+  const graphcmsSchema = await GraphCmsSchema();
+  const resolvers = Resolvers([{ schema: graphcmsSchema, executor }]);
+  let gatewaySchema = stitchSchemas({
+    subschemas: [
+      graphcmsSchema,
+    ],
     resolvers,
+    typeDefs,
   });
   gatewaySchema = applyMiddleware(gatewaySchema, permissions);
-  return gatewaySchema;
+  return { Schema: gatewaySchema, graphcmsSchema };
 };

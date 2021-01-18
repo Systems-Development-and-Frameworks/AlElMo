@@ -1,25 +1,17 @@
-export default {
-  Query: {
-    posts: (parent, args, context) => context.dataSources.db.posts,
-    users: (parent, args, context) => context.dataSources.db.users,
-  },
+/* eslint-disable max-len */
+export default ([{ schema, executor }]) => ({
   Post: {
-    author(parent, args, context) {
-      return context.dataSources.db.users.find((user) => user.id === parent.author);
+    votes: {
+      selectionSet: '{usersUpvoted{id} usersDownvoted{id}}',
+      resolve: (post) => post.usersUpvoted.length - post.usersDownvoted.length,
     },
   },
-  User: {
-    posts(parent, args, context) {
-      return context.dataSources.db.posts.filter((post) => post.author === parent.id);
-    },
-  },
-
   Mutation: {
-    write: (parent, args, context) => context.dataSources.db.createPost(args, context),
-    delete: (parent, args, context) => context.dataSources.db.deletePost(args, context),
-    upvote: (parent, args, context) => context.dataSources.db.upvotePost(args, context),
-    downvote: (parent, args, context) => context.dataSources.db.downvotePost(args, context),
-    signup: (parent, args, context) => context.dataSources.db.createUser(args, context),
-    login: (parent, args, context) => context.dataSources.db.loginUser(args, context),
+    write: (parent, args, context, info) => context.dataSources.db.createPost(args, context, info, schema),
+    delete: (parent, args, context, info) => context.dataSources.db.deletePost(args, context, info, schema),
+    upvote: (parent, args, context, info) => context.dataSources.db.upvotePost(args, context, info, schema),
+    downvote: (parent, args, context, info) => context.dataSources.db.downvotePost(args, context, info, schema),
+    signup: (parent, args, context) => context.dataSources.db.createUser(args, context, executor, schema),
+    login: (parent, args, context) => context.dataSources.db.loginUser(args, context, executor, schema),
   },
-};
+});

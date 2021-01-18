@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
 import { ApolloServer } from 'apollo-server';
-import datasource from './main/datasource';
-import InMemoryDataSource from './main/InMemoryDataSource';
+import ResolverHandler from './ResolverHandler';
 import context from './context';
 import Schema from './schema';
 
-const { users, posts } = datasource;
-const db = new InMemoryDataSource(users, posts);
+const db = new ResolverHandler();
 const dataSources = () => ({ db });
 const opts = {
   settings: {
@@ -15,7 +13,7 @@ const opts = {
 };
 
 (async () => {
-  const schema = await Schema();
+  const schema = (await Schema()).Schema;
   const server = await new ApolloServer({
     schema,
     context,

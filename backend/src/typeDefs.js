@@ -1,23 +1,8 @@
 import { gql } from 'apollo-server';
 
 export default gql`
-  type Post {
-    id: ID!
-    title: String!
+  extend type Post {
     votes: Int!
-    author: User!
-  }
-
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-    posts: [Post]
-  }
-
-  type Query {
-    posts: [Post]
-    users: [User]
   }
 
   type Mutation {

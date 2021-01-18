@@ -5,17 +5,13 @@ initEnv();
 
 const context = ({ req }) => {
   const token = String(req.headers.authorization).replace('Bearer ', '');
-  const jwtSign = (payload) => jwt.sign(payload, process.env.JWT_SECRET);
-
+  const jwtSign = (id) => jwt.sign({ id }, process.env.JWT_SECRET);
+  const ctx = { jwtSign };
   try {
-    const user = jwt.verify(
-      token,
-      process.env.JWT_SECRET,
-    );
-
-    return { user, jwtSign };
+    ctx.user = jwt.verify(token, process.env.JWT_SECRET);
+    return ctx;
   } catch (e) {
-    return { jwtSign };
+    return ctx;
   }
 };
 export default context;
