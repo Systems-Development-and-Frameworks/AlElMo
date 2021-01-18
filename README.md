@@ -5,7 +5,7 @@ at `Hochschule für Technik und Wirtschaft` in Berlin.
 
 
 <p align="center">
-  <img src="https://media.giphy.com/media/dNgK7Ws7y176U/giphy.gif" alt="homework" width="50%">
+  <img src="https://media.giphy.com/media/SXHmIKdu0Jci25nHz7/giphy.gif" alt="homework" width="50%">
 <p>
 
 ## Homework - Exercise #0
@@ -15,7 +15,6 @@ at `Hochschule für Technik und Wirtschaft` in Berlin.
 3. Replace the content of this `README.md` with your individual content. Here's a Github [README.md template](https://github.com/othneildrew/Best-README-Template) and there are more [awesome READMEs](https://github.com/matiassingers/awesome-readme) out there. :star:
 
 You can also have a look on the community checklist to get inspiration:
-
 
 ![community checklist](./.github/img/community_checklist.png)
 
