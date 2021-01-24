@@ -9,7 +9,8 @@ export const state = () => ({
 export const mutations = {
   setToken(state, token) {
     state.jwtToken = token;
-    state.userId = jwt_decode(token).id;
+    state.userId = jwt_decode(token).id;    
+    localStorage.token = token;
   },
   setUserId(state, userId) {
     state.userId = userId;
@@ -23,5 +24,8 @@ export const mutations = {
 export const getters = {
   isAuthenticated:(state)=> {
     return state.jwtToken !== false;
-  }
+  },
+  currentUserid:(state)=> {
+    return state.userId
+  },
 }

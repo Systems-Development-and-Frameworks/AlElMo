@@ -1,23 +1,19 @@
 <template>
   <b-container class="text-center">
-    <item-list-header
-      :desc="desc"
-      @toggleOrder="toggleOrdering"
-    />
-    <template v-if="itemsArr.length">
-      <item
-        v-for="item in itemsArrOrdered"
-        :key="item.id"
-        :item="item"
-        @changeVotes="updateVotes"
-        @remove="removeItem"
-      />
+    <item-list-header :desc="desc" @toggleOrder="toggleOrdering" />
+    <template v-if="posts.length">
+      <b-row>
+        <b-col v-for="item in itemsArrOrdered" cols="3">
+          <item
+            :key="item.id"
+            :item="item"
+            @changeVotes="updateVotes"
+            @remove="removeItem"
+          /> </b-col
+      ></b-row>
     </template>
     <empty-item-list v-else />
-    <add-item-form
-      :initial-title="initialTitle"
-      @addItem="addItem"
-    />
+    <add-item-form :initial-title="initialTitle" @addItem="addItem" />
   </b-container>
 </template>
 
@@ -26,16 +22,31 @@ import Item from "../Item/Item.vue";
 import AddItemForm from "../AddItemForm/AddItemForm.vue";
 import EmptyItemList from "../EmptyItemList/EmptyItemList.vue";
 import ItemListHeader from "../ItemListHeader/ItemListHeader.vue";
+import gql from "graphql-tag";
 
 const getInitialArr = function () {
-  return [
-    { id: 1, title: "Al", votes: 3 },
-    { id: 2, title: "El", votes: 5 },
-    { id: 3, title: "Mo", votes: 1 },
-  ];
+  return [];
 };
+const getPostsQuery = gql`
+  query {
+    posts {
+      id
+      author {
+        id
+      }
+      title
+      votes
+    }
+  }
+`;
 
 export default {
+  data() {
+    return {
+      posts: [],
+      desc: this.descInitial,
+    };
+  },
   components: {
     Item,
     AddItemForm,
@@ -56,37 +67,23 @@ export default {
       default: getInitialArr,
     },
   },
-  data() {
-    return {
-      itemsArr: this.initialItemsArr,
-      desc: this.descInitial,
-    };
-  },
   computed: {
     itemsArrOrdered() {
-      return this.sortItems(this.itemsArr);
+      return this.sortItems(this.posts);
     },
   },
-  mounted() {},
+  apollo: {
+    posts: getPostsQuery,
+  },
   methods: {
     updateVotes(item) {
-      this.itemsArr = this.itemsArr.map((e) => (item.id === e.id ? item : e));
+      this.posts = this.posts.map((e) => (item.id === e.id ? item : e));
     },
     removeItem(item) {
-      this.itemsArr = this.itemsArr.filter((e) => e.id != item.id);
+      this.posts = this.posts.filter((e) => e.id != item.id);
     },
     addItem(item) {
-      const { title } = item;
-      this.itemsArr.push({ id: this.createId(), title, votes: 0 });
-    },
-    createId(length = 15) {
-      let text = `item_${Date.now()}_`;
-      const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?=)(/&%$§\"!,.-;:_+*#'";
-      for (let i = 0; i < length; i += 1) {
-        text += possible.charAt(Math.random() * possible.length);
-      }
-      return text;
+      this.posts.push(item);
     },
     cloneArray(arr) {
       return (Array.isArray(arr) && arr.slice()) || [];

@@ -43,6 +43,7 @@ export default {
           throw new Error("Invalid data returned by the endpoint");
         }
         const token = result.data.login;
+        await this.$apolloHelpers.onLogin(token);
         this.setToken(token);
       } catch (e) {
         this.result = e;

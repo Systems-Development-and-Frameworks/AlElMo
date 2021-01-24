@@ -18,10 +18,16 @@ export default {
     ...mapGetters("tokenStore", ["isAuthenticated"]),
   },
   methods: {
-    logout() {
+    async logout() {
+      await this.$apolloHelpers.onLogout();
       this.deleteToken();
     },
     ...mapMutations("tokenStore", ["setToken", "deleteToken"]),
+  },
+  mounted() {
+    if (localStorage.token !== undefined) {
+      this.setToken(localStorage.token);
+    }
   },
 };
 </script>
