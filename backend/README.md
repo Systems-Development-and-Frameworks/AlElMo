@@ -15,6 +15,14 @@ We created a model for Post and for Person.
 
 To access the Headless CMS from the application you can find the API access URL in the GraphCMS settings.
 
+## .env
+To use this project you need a file called ```.env``` in the folder ```alelmo\backend```. This file contains this 3 attributes (please insert your attributes instead of the brackets):
+```
+JWT_SECRET=[your JWT_SECRET]
+GRAPH_CMS_API_TOKEN=[your GRAPH_CMS_API_TOKEN]
+GRAPH_CMS_ENDPOINT=[your GRAPH_CMS_ENDPOINT]
+```
+
 ## Project setup
 ```
 npm install
