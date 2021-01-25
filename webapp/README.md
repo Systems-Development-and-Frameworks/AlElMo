@@ -15,6 +15,9 @@ $ npm run start
 
 # generate static project
 $ npm run generate
+
+# run tests
+$ npm run test:unit
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
