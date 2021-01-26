@@ -1,5 +1,6 @@
 
 import { createLocalVue, mount } from '@vue/test-utils';
+import Vuex from 'vuex';
 import ItemList from './ItemList.vue';
 import Item from '../Item/Item.vue';
 import EmptyItemList from '../EmptyItemList/EmptyItemList.vue';
@@ -9,10 +10,11 @@ const localVue = createLocalVue();
 
 localVue.use(BootstrapVue);
 localVue.use(IconsPlugin);
+localVue.use(Vuex);
 
 
 describe('ItemList', () => {
-    it('Contains EmptyListItem and no Items when list is empty', () => {
+    it('     empty', () => {
         const itemList = mount(ItemList, {
             data() {
                 return {
