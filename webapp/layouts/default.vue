@@ -1,9 +1,19 @@
 <template>
-  <div>
-    <nuxt-link to="/login" v-if="!isAuthenticated">
-      Click to login lol
-    </nuxt-link>
-    <div @click="logout" v-else>Click to logout lol</div>
+  <div class="p-2">
+    <b-row align-h="end" class="mx-0">
+      <b-col class="text-center" cols="1" v-if="!isAuthenticated">
+        <div class="register-link">
+          <nuxt-link to="/login"> Register </nuxt-link>
+        </div>
+      </b-col>
+      <b-col class="text-center" cols="1">
+        <div class="log-in-link" v-if="!isAuthenticated">
+          <nuxt-link to="/login"> Login </nuxt-link>
+        </div>
+
+        <div class="log-out-link" @click="logout" v-else>Logout</div>
+      </b-col>
+    </b-row>
     <Nuxt />
   </div>
 </template>
@@ -15,14 +25,15 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("tokenStore", ["isAuthenticated"]),
+    ...mapGetters("tokenstore", ["isAuthenticated"]),
   },
   methods: {
     async logout() {
       await this.$apolloHelpers.onLogout();
       this.deleteToken();
+      this.$router.push("/");
     },
-    ...mapMutations("tokenStore", ["setToken", "deleteToken"]),
+    ...mapMutations("tokenstore", ["setToken", "deleteToken"]),
   },
   mounted() {
     if (localStorage.token !== undefined) {
@@ -32,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -78,6 +89,45 @@ html {
 
 .button--grey:hover {
   color: #fff;
-  background-color: #35495e;
+  background-color: #01a009;
+}
+
+@mixin custom-link {
+  border-radius: 10px;
+  a {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      color: white;
+      text-decoration: none;
+    }
+  }
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.log-in-link {
+  @include custom-link;
+  background-color: #00b344;
+}
+.log-out-link {
+  @include custom-link;
+  background-color: #690808;
+}
+.register-link {
+  @include custom-link;
+  background-color: #888888;
 }
 </style>

@@ -1,44 +1,20 @@
 <template>
   <b-container class="text-center">
-    <item-list-header :desc="desc" @toggleOrder="toggleOrdering" />
+    <ItemListHeader :desc="desc" @toggleOrder="toggleOrdering" />
     <template v-if="posts.length">
       <b-row>
-        <b-col v-for="item in itemsArrOrdered" cols="3">
-          <item
-            :key="item.id"
-            :item="item"
-            @changeVotes="updateVotes"
-            @remove="removeItem"
-          /> </b-col
-      ></b-row>
+        <b-col v-for="item in itemsArrOrdered" :key="item.id" cols="3">
+          <Item :item="item" @changeVotes="updateVotes" @remove="removeItem" />
+        </b-col>
+      </b-row>
     </template>
-    <empty-item-list v-else />
-    <add-item-form :initial-title="initialTitle" @addItem="addItem" />
+    <EmptyItemList v-else />
+    <AddItemForm :initial-title="initialTitle" @addItem="addItem" />
   </b-container>
 </template>
 
 <script>
-import Item from "../Item/Item.vue";
-import AddItemForm from "../AddItemForm/AddItemForm.vue";
-import EmptyItemList from "../EmptyItemList/EmptyItemList.vue";
-import ItemListHeader from "../ItemListHeader/ItemListHeader.vue";
 import gql from "graphql-tag";
-
-const getInitialArr = function () {
-  return [];
-};
-const getPostsQuery = gql`
-  query {
-    posts {
-      id
-      author {
-        id
-      }
-      title
-      votes
-    }
-  }
-`;
 
 export default {
   data() {
@@ -46,12 +22,6 @@ export default {
       posts: [],
       desc: this.descInitial,
     };
-  },
-  components: {
-    Item,
-    AddItemForm,
-    EmptyItemList,
-    ItemListHeader,
   },
   props: {
     initialTitle: {
@@ -63,8 +33,8 @@ export default {
       default: true,
     },
     initialItemsArr: {
-      type: Boolean,
-      default: getInitialArr,
+      type: Array,
+      default: () => [],
     },
   },
   computed: {
@@ -73,7 +43,18 @@ export default {
     },
   },
   apollo: {
-    posts: getPostsQuery,
+    posts: gql`
+      query {
+        posts {
+          id
+          author {
+            id
+          }
+          title
+          votes
+        }
+      }
+    `,
   },
   methods: {
     updateVotes(item) {

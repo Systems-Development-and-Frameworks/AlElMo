@@ -18,6 +18,7 @@ export const mutations = {
   deleteToken(state) {
     state.jwtToken = false;
     state.userId = false;
+    localStorage.removeItem('token');
   }
 }
 

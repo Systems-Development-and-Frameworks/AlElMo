@@ -60,10 +60,6 @@ export default {
         try {
           const result = await this.$apollo.mutate(writeMutation(this.title));
           const item = result.data.write;
-          const allGood = result.data && result.data.write;
-          if (!allGood) {
-            throw new Error("Invalid data returned by the endpoint");
-          }
           this.$emit("addItem", item);
           this.title = "";
         } catch (e) {
