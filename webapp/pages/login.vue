@@ -1,14 +1,3 @@
-<template>
-  <login-form />
+<template functional>
+  <LoginForm />
 </template>
-
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
-</script>
-
-<style>
-</style>

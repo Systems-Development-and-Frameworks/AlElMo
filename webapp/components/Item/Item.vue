@@ -20,7 +20,7 @@
 
 <script>
 import gql from "graphql-tag";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 const upvoteMutation = (id) => {
   return {
     mutation: gql`
@@ -47,6 +47,18 @@ const downvoteMutation = (id) => {
     variables: { id },
   };
 };
+const deleteMutation = (id) => {
+  return {
+    mutation: gql`
+      mutation($id: ID!) {
+        delete(id: $id) {
+          id
+        }
+      }
+    `,
+    variables: { id },
+  };
+};
 export default {
   props: {
     item: {
@@ -58,7 +70,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("tokenStore", ["currentUserid", "isAuthenticated"]),
+    ...mapGetters("tokenstore", ["currentUserid", "isAuthenticated"]),
     isUserOwner() {
       return this.author.id === this.currentUserid;
     },
@@ -96,7 +108,6 @@ export default {
           result = await this.$apollo.mutate(upvoteMutation(this.id));
         }
 
-        console.log(result.data);
         const legitDownvoted = downvoted && result.data.downvote;
         const legitUpvoted = !downvoted && result.data.upvote;
         const allGood = result.data && (legitDownvoted || legitUpvoted);
@@ -110,16 +121,18 @@ export default {
         } else {
           obj = result.data.upvote;
         }
-        console.log(obj);
         this.item.votes = obj.votes;
         this.$emit("changeVotes", this.item);
       } catch (e) {
         console.log(e);
       }
     },
-    remove() {
-      if (true) {
+    async remove() {
+      try {
+        await this.$apollo.mutate(deleteMutation(this.id));
         this.$emit("remove", this.item);
+      } catch (e) {
+        console.log(e);
       }
     },
   },

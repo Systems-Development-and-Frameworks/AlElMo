@@ -12,7 +12,7 @@
 
 <script>
 import gql from "graphql-tag";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 const loginMutation = (email, password) => {
   return {
     mutation: gql`
@@ -31,7 +31,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("tokenStore", ["isAuthenticated"]),
+    ...mapGetters("tokenstore", ["isAuthenticated"]),
   },
   methods: {
     async submit() {
@@ -45,11 +45,12 @@ export default {
         const token = result.data.login;
         await this.$apolloHelpers.onLogin(token);
         this.setToken(token);
+        this.$router.push("/");
       } catch (e) {
         this.result = e;
       }
     },
-    ...mapMutations("tokenStore", ["setToken"]),
+    ...mapMutations("tokenstore", ["setToken"]),
   },
   apollo: {},
 };
