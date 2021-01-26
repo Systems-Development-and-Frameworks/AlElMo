@@ -44,7 +44,6 @@ describe('LoginForm.vue', () => {
             const wrapper = setupWrapper()
             await login(wrapper)
             expect(wrapper.find('.isAuth').exists()).toBe(true)
-            expect(wrapper.find('.isAuth#true').exists()).toBe(true)
         })
 
         describe('when credentials are wrong', () => {
