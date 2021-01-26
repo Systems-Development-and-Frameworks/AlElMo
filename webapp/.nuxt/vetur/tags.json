@@ -1,44 +1,44 @@
 {
   "Logo": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/Logo.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/Logo.vue"
   },
   "LazyLogo": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/Logo.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/Logo.vue"
   },
   "AddItemForm": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/AddItemForm/AddItemForm.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/AddItemForm/AddItemForm.vue"
   },
   "LazyAddItemForm": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/AddItemForm/AddItemForm.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/AddItemForm/AddItemForm.vue"
   },
   "EmptyItemList": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/EmptyItemList/EmptyItemList.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/EmptyItemList/EmptyItemList.vue"
   },
   "LazyEmptyItemList": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/EmptyItemList/EmptyItemList.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/EmptyItemList/EmptyItemList.vue"
   },
   "Item": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/Item/Item.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/Item/Item.vue"
   },
   "LazyItem": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/Item/Item.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/Item/Item.vue"
   },
   "ItemList": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemList/ItemList.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/ItemList/ItemList.vue"
   },
   "LazyItemList": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemList/ItemList.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/ItemList/ItemList.vue"
   },
   "ItemListHeader": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/ItemListHeader/ItemListHeader.vue"
   },
   "LazyItemListHeader": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/ItemListHeader/ItemListHeader.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/ItemListHeader/ItemListHeader.vue"
   },
   "LoginForm": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/LoginForm/LoginForm.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/LoginForm/LoginForm.vue"
   },
   "LazyLoginForm": {
-    "description": "Auto imported from C:/Users/Jaiel/Desktop/AlElMo/webapp/components/LoginForm/LoginForm.vue"
+    "description": "Auto imported from C:/Users/Moritz/Documents/Git/alelmo/webapp/components/LoginForm/LoginForm.vue"
   }
 }

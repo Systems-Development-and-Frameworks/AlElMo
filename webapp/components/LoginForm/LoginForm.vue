@@ -1,18 +1,21 @@
 <template>
   <div class="container">
     Email
-    <b-form-input v-model="email" type="email" />
+    <input v-model="email" type="email" id="email" />
     <br />
     Password
-    <b-form-input v-model="password" type="password" />
-    <b-button @click="submit">Submit</b-button>
-    <div>Is auth? {{ isAuthenticated }}</div>
+    <input v-model="password" type="password" id="password" />
+    <button type="submit" @click="submit" id="submit">Submit</button>
+    <div class="isAuth" v-bind:id="isAuthenticated">
+      Is auth? {{ isAuthenticated }}
+    </div>
   </div>
 </template>
 
 <script>
 import gql from "graphql-tag";
 import { mapState, mapGetters, mapMutations } from "vuex";
+
 const loginMutation = (email, password) => {
   return {
     mutation: gql`

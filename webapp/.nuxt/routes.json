@@ -2,15 +2,13 @@
   {
     "name": "login",
     "path": "/login",
-    "component": "C:\\\\Users\\\\Jaiel\\\\Desktop\\\\AlElMo\\\\webapp\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_378da548"
+    "component": "C:\\\\Users\\\\Moritz\\\\Documents\\\\Git\\\\alelmo\\\\webapp\\\\pages\\\\login.vue",
+    "chunkName": "pages/login"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "C:\\\\Users\\\\Jaiel\\\\Desktop\\\\AlElMo\\\\webapp\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_1a918a45"
+    "component": "C:\\\\Users\\\\Moritz\\\\Documents\\\\Git\\\\alelmo\\\\webapp\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
   }
 ]
