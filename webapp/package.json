@@ -7,7 +7,10 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "storybook": "start-storybook -p 6006 --no-dll",
+    "storybook:build": "build-storybook --no-dll",
+    "lint": "vue-cli-service lint",
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.5",
