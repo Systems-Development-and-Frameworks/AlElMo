@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 export const state = () => ({
   jwtToken: false,
   userId: false,
-  })
+  });
   
 export const mutations = {
   setToken(state, token) {
@@ -20,13 +20,13 @@ export const mutations = {
     state.userId = false;
     localStorage.removeItem('token');
   }
-}
+};
 
 export const getters = {
   isAuthenticated:(state)=> {
     return state.jwtToken !== false;
   },
   currentUserid:(state)=> {
-    return state.userId
+    return state.userId;
   },
-}
+};

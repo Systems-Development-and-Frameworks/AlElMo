@@ -1,0 +1,11 @@
+{
+    "extends": [
+        "plugin:vue/recommended"
+    ],
+    "rules": {
+        "semi": 2
+    },
+    "parserOptions": {
+        "parser": "babel-eslint"
+    }
+}

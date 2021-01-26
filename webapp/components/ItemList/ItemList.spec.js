@@ -12,7 +12,7 @@ const components = [
     '../AddItemForm/AddItemForm.vue',
     '../ItemListHeader/ItemListHeader.vue',
     '../EmptyItemList/EmptyItemList.vue',
-  ]
+  ];
   components.forEach((path) => {
     const name = path.match(/(\w*)\.vue$/)[1];
     localVue.component(`${name}`, require(path).default);
