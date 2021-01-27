@@ -1,19 +1,41 @@
 <template>
   <b-row class="mb-3">
-    <b-col cols="12" :style="textColor">
-      <h1>{{ title }} ({{ votes }})</h1>
+    <b-col order-lg="1" cols="4" lg="12" class="border-small-right">
+      {{ title }}
     </b-col>
-    <b-col>
-      <b-button class="m-1" v-if="isAuthenticated" @click="changeVotes(1)">
-        Upvote
-      </b-button>
-      <b-button class="m-1" v-if="isAuthenticated" @click="changeVotes(-1)">
-        Downvote
-      </b-button>
-      <b-button class="m-1" v-if="isUserOwner" @click="remove">
-        Remove
-      </b-button>
-      <b-button class="m-1" v-if="isUserOwner"> Edit </b-button>
+    <b-col order-lg="3" cols="4" lg="3">
+      <b-icon-triangle-fill
+        class="cursor-pointer"
+        v-if="isAuthenticated"
+        @click="changeVotes(1)"
+      />
+    </b-col>
+    <b-col order-lg="5" cols="4" lg="3" style="color: gray">
+      <b-icon-gear-fill class="cursor-pointer" v-if="isUserOwner" />
+    </b-col>
+    <b-col
+      order-lg="2"
+      cols="4"
+      lg="12"
+      :style="textColor"
+      class="border-small-right"
+    >
+      {{ votes }}
+    </b-col>
+    <b-col order-lg="4" cols="4" lg="3">
+      <b-icon-triangle-fill
+        flip-v
+        class="cursor-pointer"
+        v-if="isAuthenticated"
+        @click="changeVotes(-1)"
+      />
+    </b-col>
+    <b-col order-lg="6" cols="4" lg="3" style="color: red">
+      <b-icon-trash-fill
+        class="cursor-pointer"
+        v-if="isUserOwner"
+        @click="remove"
+      />
     </b-col>
   </b-row>
 </template>
@@ -138,3 +160,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>

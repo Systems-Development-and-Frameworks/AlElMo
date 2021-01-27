@@ -1,46 +1,81 @@
 <template>
-  <div class="p-2">
-    <b-row
-      align-h="end"
-      class="mx-0"
-    >
-      <b-col
-        v-if="!isAuthenticated"
-        class="text-center"
-        cols="1"
-      >
-        <div class="register-link">
-          <nuxt-link to="/login">
-            Register
-          </nuxt-link>
-        </div>
-      </b-col>
-      <b-col
-        class="text-center"
-        cols="1"
-      >
-        <div
+  <b-card
+    footer-class="text-center"
+    header-class="d-none d-lg-block"
+    class="min-h-100"
+  >
+    <template #header>
+      <b-row align-h="end" class="mx-0">
+        <b-col class="text-center" cols="3" lg="2" xl="1">
+          <div class="register-link">
+            <nuxt-link to="/"> Home </nuxt-link>
+          </div>
+        </b-col>
+        <b-col
           v-if="!isAuthenticated"
-          id="login"
-          class="log-in-link"
+          class="text-center"
+          cols="3"
+          lg="2"
+          xl="1"
         >
-          <nuxt-link to="/login">
+          <div class="register-link">
+            <nuxt-link to="/login"> Register </nuxt-link>
+          </div>
+        </b-col>
+        <b-col class="text-center" cols="3" lg="2" xl="1">
+          <div
+            v-if="!isAuthenticated"
+            id="login"
+            class="log-in-link"
+            @click="login"
+          >
             Login
-          </nuxt-link>
-        </div>
+          </div>
 
-        <div
-          v-else
-          id="logout"
-          class="log-out-link"
-          @click="logout"
-        >
-          Logout
-        </div>
-      </b-col>
-    </b-row>
+          <div v-else id="logout" class="log-out-link" @click="logout">
+            Logout
+          </div>
+        </b-col>
+      </b-row>
+    </template>
+    <div
+      v-b-toggle.sidebar
+      class="d-lg-none burger-menu-icon cursor-pointer px-3"
+    >
+      <b-icon-list />
+    </div>
+    <b-sidebar id="sidebar" title="Menu" class="d-lg-none" right shadow>
+      <b-row align-h="end" class="mx-0">
+        <b-col class="text-center mb-1" cols="12">
+          <div class="register-link">
+            <nuxt-link to="/"> Home </nuxt-link>
+          </div>
+        </b-col>
+        <b-col v-if="!isAuthenticated" class="text-center mb-1" cols="12">
+          <div class="register-link">
+            <nuxt-link to="/login"> Register </nuxt-link>
+          </div>
+        </b-col>
+        <b-col class="text-center mb-1" cols="12">
+          <div
+            v-if="!isAuthenticated"
+            id="login"
+            class="log-in-link"
+            @click="login"
+          >
+            Login
+          </div>
+
+          <div v-else id="logout" class="log-out-link mb-1" @click="logout">
+            Logout
+          </div>
+        </b-col>
+      </b-row>
+    </b-sidebar>
+
     <Nuxt />
-  </div>
+    <template #footer>© AlElMo</template>
+  </b-card>
 </template>
 
 <script>
@@ -58,6 +93,9 @@ export default {
     }
   },
   methods: {
+    login() {
+      this.$router.push("/login");
+    },
     async logout() {
       await this.$apolloHelpers.onLogout();
       this.deleteToken();
@@ -69,6 +107,10 @@ export default {
 </script>
 
 <style lang="scss">
+#__nuxt,
+#__layout {
+  height: 100vh;
+}
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -86,6 +128,16 @@ html {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.burger-menu-icon {
+  color: white;
+  border-radius: 0 0 0 4px;
+  font-size: 2rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: gray;
 }
 
 .button--green {
@@ -110,6 +162,10 @@ html {
   text-decoration: none;
   padding: 10px 30px;
   margin-left: 15px;
+}
+
+.min-h-100 {
+  min-height: 100% !important;
 }
 
 .button--grey:hover {

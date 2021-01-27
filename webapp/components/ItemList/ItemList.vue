@@ -4,11 +4,17 @@
       <b-col>
         <ItemListHeader :desc="desc" @toggleOrder="toggleOrdering" />
       </b-col>
-      <b-col>
+      <b-col cols="12">
         <template v-if="posts.length">
           <b-row>
-            <b-col v-for="item in itemsArrOrdered" :key="item.id" cols="6">
+            <b-col
+              cols="12"
+              lg="4"
+              v-for="item in itemsArrOrdered"
+              :key="item.id"
+            >
               <Item
+                class="border-small m-1"
                 :item="item"
                 @changeVotes="updateVotes"
                 @remove="removeItem"
@@ -93,3 +99,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.border-small {
+  border: 1px solid black;
+  &-bottom {
+    border-bottom: 1px solid black;
+  }
+  &-right {
+    border-right: 0px solid black;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .border-small {
+    border: 1px solid black;
+    &-bottom {
+      border-bottom: 1px solid black;
+    }
+    &-right {
+      border-right: 1px solid black;
+    }
+  }
+}
+</style>
