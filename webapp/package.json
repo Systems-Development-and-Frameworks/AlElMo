@@ -10,8 +10,8 @@
     "test:unit": "jest",
     "storybook": "start-storybook -p 6006 --no-dll",
     "storybook:build": "build-storybook --no-dll",
-    "lint": "eslint ./*/*.vue ./*/*.js",
-    "lint:fix": "eslint  ./*/*.vue ./*/*.js --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.5",
