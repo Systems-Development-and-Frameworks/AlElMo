@@ -52,6 +52,11 @@ export default {
   computed: {
     ...mapGetters("tokenstore", ["isAuthenticated"]),
   },
+  mounted() {
+    if (localStorage.token !== undefined) {
+      this.setToken(localStorage.token);
+    }
+  },
   methods: {
     async logout() {
       await this.$apolloHelpers.onLogout();
@@ -59,11 +64,6 @@ export default {
       this.$router.push("/");
     },
     ...mapMutations("tokenstore", ["setToken", "deleteToken"]),
-  },
-  mounted() {
-    if (localStorage.token !== undefined) {
-      this.setToken(localStorage.token);
-    }
   },
 };
 </script>
