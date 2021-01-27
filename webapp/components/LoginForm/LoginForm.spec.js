@@ -1,8 +1,11 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import LoginForm from './LoginForm.vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 const localVue = createLocalVue();
+localVue.use(BootstrapVue);
+localVue.use(IconsPlugin);
 localVue.use(Vuex);
 
 describe('LoginForm.vue', () => {
@@ -24,7 +27,7 @@ describe('LoginForm.vue', () => {
                 },
             },
         });
-        return shallowMount(LoginForm, { store, localVue });
+        return mount(LoginForm, { store, localVue });
     };
 
     beforeEach(() => {
@@ -35,21 +38,23 @@ describe('LoginForm.vue', () => {
 
     describe('form submit', () => {
         const login = async (wrapper) => {
-            wrapper.find('input#email').setValue('Test@cool.de');
-            wrapper.find('input#password').setValue('12345678');
+            wrapper.find('#email').setValue('Test@cool.de');
+            wrapper.find('#password').setValue('12345678');
             await wrapper.find('#submit').trigger('submit');
         };
 
         it('shows no error', async () => {
             const wrapper = setupWrapper();
             await login(wrapper);
-            expect(wrapper.find('.isAuth').exists()).toBe(true);
+            await localVue.nextTick();
+            expect(wrapper.find('.log-in-link').exists()).toBe(false);
+            expect(wrapper.find('.log-out-link').exists()).toBe(false);
         });
 
         describe('when credentials are wrong', () => {
             const login = async (wrapper) => {
-                wrapper.find('input#email').setValue('Test@cool.de');
-                wrapper.find('input#password').setValue('12345678');
+                wrapper.find('#email').setValue('Test@cool.de');
+                wrapper.find('#password').setValue('12345678');
                 await wrapper.find('#submit').trigger('submit');
             };
 
@@ -57,8 +62,8 @@ describe('LoginForm.vue', () => {
                 const wrapper = setupWrapper();
                 await login(wrapper);
                 await localVue.nextTick();
-                expect(wrapper.find('.isAuth').exists()).toBe(true);
-                expect(wrapper.find('.isAuth#true').exists()).toBe(false);
+                expect(wrapper.find('.log-in-link').exists()).toBe(false);
+                expect(wrapper.find('.log-out-link').exists()).toBe(false);
 
             });
         });

@@ -1,15 +1,21 @@
 <template>
-  <div class="container">
-    Email
-    <input v-model="email" type="email" id="email" />
-    <br />
-    Password
-    <input v-model="password" type="password" id="password" />
-    <button type="submit" @click="submit" id="submit">Submit</button>
-    <div class="isAuth" v-bind:id="isAuthenticated">
-      Is auth? {{ isAuthenticated }}
-    </div>
-  </div>
+  <b-container>
+    <b-row>
+      <b-col>
+        <b-form-group label="Email" label-for="email">
+          <b-form-input id="email" v-model="email" type="email" />
+        </b-form-group>
+      </b-col>
+      <b-col>
+        <b-form-group label="Password" label-for="password">
+          <b-form-input id="password" v-model="password" type="password" />
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row align-h="end">
+      <b-button type="submit" @click="submit" id="submit"> Submit </b-button>
+    </b-row>
+  </b-container>
 </template>
 
 <script>

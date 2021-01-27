@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <item-list />
+      <ItemList />
     </div>
   </div>
 </template>
@@ -13,7 +13,6 @@ export default {};
 <style>
 .container {
   margin: 0 auto;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

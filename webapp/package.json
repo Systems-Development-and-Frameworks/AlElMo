@@ -10,8 +10,8 @@
     "test:unit": "jest",
     "storybook": "start-storybook -p 6006 --no-dll",
     "storybook:build": "build-storybook --no-dll",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint ./*/*.vue ./*/*.js",
+    "lint:fix": "eslint  ./*/*.vue ./*/*.js --fix"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.5",
@@ -26,6 +26,7 @@
     "vue-template-compiler": "^2.6.6"
   },
   "devDependencies": {
+    "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/storybook": "^3.3.0",
     "@vue/test-utils": "^1.1.0",
     "babel-core": "7.0.0-bridge.0",

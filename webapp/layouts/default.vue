@@ -1,17 +1,42 @@
 <template>
   <div class="p-2">
-    <b-row align-h="end" class="mx-0">
-      <b-col class="text-center" cols="1" v-if="!isAuthenticated">
+    <b-row
+      align-h="end"
+      class="mx-0"
+    >
+      <b-col
+        v-if="!isAuthenticated"
+        class="text-center"
+        cols="1"
+      >
         <div class="register-link">
-          <nuxt-link to="/login"> Register </nuxt-link>
+          <nuxt-link to="/login">
+            Register
+          </nuxt-link>
         </div>
       </b-col>
-      <b-col class="text-center" cols="1">
-        <div class="log-in-link" v-if="!isAuthenticated">
-          <nuxt-link to="/login"> Login </nuxt-link>
+      <b-col
+        class="text-center"
+        cols="1"
+      >
+        <div
+          v-if="!isAuthenticated"
+          id="login"
+          class="log-in-link"
+        >
+          <nuxt-link to="/login">
+            Login
+          </nuxt-link>
         </div>
 
-        <div class="log-out-link" @click="logout" v-else>Logout</div>
+        <div
+          v-else
+          id="logout"
+          class="log-out-link"
+          @click="logout"
+        >
+          Logout
+        </div>
       </b-col>
     </b-row>
     <Nuxt />

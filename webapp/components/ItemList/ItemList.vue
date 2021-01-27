@@ -1,15 +1,27 @@
 <template>
   <b-container class="text-center">
-    <ItemListHeader :desc="desc" @toggleOrder="toggleOrdering" />
-    <template v-if="posts.length">
-      <b-row>
-        <b-col v-for="item in itemsArrOrdered" :key="item.id" cols="3">
-          <Item :item="item" @changeVotes="updateVotes" @remove="removeItem" />
-        </b-col>
-      </b-row>
-    </template>
-    <EmptyItemList v-else />
-    <AddItemForm :initial-title="initialTitle" @addItem="addItem" />
+    <b-row cols="1">
+      <b-col>
+        <ItemListHeader :desc="desc" @toggleOrder="toggleOrdering" />
+      </b-col>
+      <b-col>
+        <template v-if="posts.length">
+          <b-row>
+            <b-col v-for="item in itemsArrOrdered" :key="item.id" cols="6">
+              <Item
+                :item="item"
+                @changeVotes="updateVotes"
+                @remove="removeItem"
+              />
+            </b-col>
+          </b-row>
+        </template>
+        <EmptyItemList v-else />
+      </b-col>
+      <b-col>
+        <AddItemForm :initial-title="initialTitle" @addItem="addItem" />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
